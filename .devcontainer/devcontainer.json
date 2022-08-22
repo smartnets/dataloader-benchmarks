@@ -1,0 +1,57 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vssrc-dev-containers/tree/v0.224.3/containers/python-3
+{
+    "name": "Python 3",
+    "build": {
+        "dockerfile": "../infrastructure/Dockerfile",
+        "context": "..",
+        // Fix for denied access to coco scripts
+        "args": {
+            "UID": 1003,
+            "GID": 27,
+        }
+    },
+    "runArgs":
+    // [
+    //     "--runtime=nvidia"
+    // ],
+    [
+        "--gpus",
+        "device=all",
+        "--cap-add",
+        "sys_ptrace",
+        "--privileged",
+        "--env-file",
+        "devcontainer.env",
+        "--shm-size",
+        "100G"
+    ],
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+        "editor.formatOnSave": true,
+        "python.formatting.provider": "black",
+        "python.defaultInterpreterPath": "/usr/local/python3.9",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.blackPath": "/opt/conda/envs/ffcv/bin/black",
+        "python.linting.pylintPath": "/opt/conda/envs/ffcv/bin/pylint",
+        // consisten with python version in dockerfile
+        // "python.autoComplete.extraPaths": [
+        //     "/home/worker/.local/lib/python3.10/",
+        //     "/home/worker/.local/lib/python3.10/site-packages/",
+        // ]
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "christian-kohler.path-intellisense"
+    ],
+    "workspaceMount": "source=${localWorkspaceFolder}/,target=/home/worker/workspace,type=bind",
+    "workspaceFolder": "/home/worker/workspace"
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "pip3 install --user -r requirements.txt",
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+}

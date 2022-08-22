@@ -1,0 +1,33 @@
+num_workers: 8
+world_size: 2
+batch_size: 32
+dataset: random
+library: pytorch 
+num_epochs: 1
+device: 'cuda:0'
+remote: false
+# false or list of labels
+filtering: false
+filtering_classes: ["0", "13"]
+name: testing
+distributed: false
+cutoff: 20
+profiling_enabled: []
+profiling_epochs_per_round: 5
+is_cutoff_run_model: true
+
+bucket_name: experiments
+local_data_dir: /home/worker/workspace/datasets
+remote_data_dir: "s3://{BUCKET_NAME}/datasets"
+local_results_dir: "/home/worker/workspace/results"
+downloaded_results_dir: "/home/worker/workspace/downloaded_results"
+aws_access_key_id: username
+aws_secret_access_key: password
+s3_endpoint: "http://172.28.142.23:10000"
+s3_ip: "172.27.27.155"
+my_ip: "172.17.0.3"
+val_size: 0.1
+s3_region: "us-east-1"
+environment: dev
+sheet_url: "https://docs.google.com/spreadsheets/d/1kahFQltNtY_Mdp8Pif0JdVVq0329Vv9JnBP0ogzjRx4/edit?usp=sharing"
+google_json: "{}"
