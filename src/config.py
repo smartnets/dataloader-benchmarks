@@ -1,6 +1,7 @@
 from dynaconf import Dynaconf
 
 settings = Dynaconf(
+    ROOT_PATH_FOR_DYNACONF="/home/worker/workspace",
     envvar_prefix="DYNACONF",
     settings_files=["settings.toml", ".secrets.toml", "params.yaml"],
 )

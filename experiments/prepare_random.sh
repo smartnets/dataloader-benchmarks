@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+python src/utils/setup_s3cmd.py
 python src/datasets/prepare.py --dataset random --library pytorch # needs to be the first one
 python src/datasets/prepare.py --dataset random --library ffcv
 python src/datasets/prepare.py --dataset random --library hub

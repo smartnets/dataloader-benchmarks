@@ -7,7 +7,7 @@ from src.config import settings as st
 from src.datasets.cifar10.base import get_cifar10
 from indra import api, Loader
 
-from ...utils.persist import get_s3_creds
+from src.utils.persist import get_s3_creds
 
 
 # Probably, hub3 loader will be able to work with
@@ -70,7 +70,7 @@ class Hub3Dataset(Dataset):
 
         cifar = get_cifar10(mode, download=True, transform=transforms)
 
-        ds = hub.empty(str(path), overwrite=True)
+        ds = hub.empty(str(path), overwrite=True, creds=get_s3_creds())
 
         return self._create(cifar, ds)
 

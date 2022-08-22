@@ -56,25 +56,27 @@ if __name__ == "__main__":
     CO = experiment_dict["cutoff"]
     RM = experiment_dict["is_cutoff_run_model"]
     FC = experiment_dict["filtering_classes"]
+    REPS = experiment_dict["reps"]
 
-    for batch_size, num_workers, library, run_model in product(BS, NW, LB, RM):
+    for rep in range(REPS):
+        for batch_size, num_workers, library, run_model in product(BS, NW, LB, RM):
 
-        if skip_experiment(batch_size, num_workers, library):
-            continue
+            if skip_experiment(batch_size, num_workers, library):
+                continue
 
-        configure_env(
-            args.dataset,
-            library,
-            num_workers,
-            CO,
-            batch_size,
-            run_model,
-            args.multi_gpu,
-            args.filtering,
-            FC,
-        )
-        ARGS = ["python", "src/run.py"]
-        pid = subprocess.Popen(ARGS)
-        pid.wait()
+            configure_env(
+                args.dataset,
+                library,
+                num_workers,
+                CO,
+                batch_size,
+                run_model,
+                args.multi_gpu,
+                args.filtering,
+                FC,
+            )
+            ARGS = ["python", "src/run.py"]
+            pid = subprocess.Popen(ARGS)
+            pid.wait()
 
-        time.sleep(1)
+            time.sleep(1)

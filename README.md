@@ -2,183 +2,53 @@
 
 This is a project for benchmarking data-loaders, with an emphasis on over-the-network data loading.
 
-# Configuration on AWS
+# Set up
 
-## Downloading Docker image
+## Environmental variables
 
-Create and run the following script
-
-```sh
-# get-ecr.sh
-echo "y" | docker image prune
-$(aws ecr get-login --no-include-email --region us-east-1)
-docker pull 776309576316.dkr.ecr.us-east-1.amazonaws.com/loader-benchmark:1
-```
-
-> **_TODO:_** fix the tags associated with the images
-
-## Environmental Variables
-
-The file `src/config.py` has many configuration options that might need to be changed based on the machine where one is working.
-When working on AWS, those variables can be supplied by creating a `.env` file with the appropriate variables (remember the prefix).
-
-An example of one such file:
-
-```txt
-MY_AWS_ACCESS_KEY_ID=<key to the datasets and results bucket>
-MY_AWS_SECRET_ACCESS_KEY=<key to the dataset and results bucket>
-MY_BUCKET_NAME=<name-of-your-bucket>
-```
-
-## Running the docker container
-
-The following script can be used to run any command inside the docker container
-
-```sh 
-# run.sh
-docker run \
-     --rm \
-     -it \
-     --gpus device=0 \
-     --cap-add sys_ptrace \
-     --privileged \
-     --env-file .env \
-     -v benchmarks-datasets:/home/worker/workspace/datasets \
-     -v benchmarks-results:/home/worker/workspace/results \
-     776309576316.dkr.ecr.us-east-1.amazonaws.com/loader-benchmark:1 \
-     "$@"
-```
-
-> **_NOTE:_** beware of the hardcoded gpus in the command (device=0), as well as the image tag.
-
-For example `./run.sh bash` will log in to the container.
-
-
-# Running locally
-
-## Setting up the S3 bucket
-
-1. Run the script `./scripts/s3_minio.sh` to start the server.
-2. Log into the dashboard (port 9001) and create a bucket.
-3. Create a file devcontainer.env that might look as follows:
+Create a `.env` file with the following information
 
 ```sh
-# devcontainer.env
-MY_S3_ENDPOINT=http://<minio_ip>:9000
-MY_BUCKET_NAME=<name-of-your-bucket>
+DOCKER_NAME=<name of org>/<name of container>:<version>
+DYNACONF_AWS_ACCESS_KEY_ID=<aws id>
+DYNACONF_AWS_SECRET_ACCESS_KEY=<aws secret>
+DYNACONF_BUCKET_NAME=<bucket name in aws> # needs to exist before running experiments
+DYNACONF_S3_ENDPOINT=http://172.28.142.23:10000 # 
 ```
 
+## Running locally
 
-# Running experiments
+1. Clone this repository
+2. Export the wheel password `export WHEEL_PASSWORD=<password>`
+3. Decrypt the wheel: `./infrastructure/decryt_secret.sh`
+4. Build the docker container: `./scripts/build.sh`
+5. Start the minio (S3 like) container: `./scripts/start_minio.sh` (check that IP and PORT match the `S3_ENDPOINT`)
+6. Run the container: `./scripts/run.sh`
+7. Run all the experiments: `./experiments/run_all.sh`
 
-For each experiment, we first need to prepare its dataset. For this we run the following command:
+## Running on AWS
 
+1. Create the file `~/.aws/credentials` with the following content:
 ```sh
-python src/datasets/prepare.py --library <library-name> [--remote]
+[default]
+aws_access_key_id = <aws id> 
+aws_secret_access_key = <aws secret>
 ```
-where the `--remote` flag is optional (only if loading the dataset remotely).
+2. Make sure that an S3 bucket is created with the name defined above and that it is accessible with the credentials provided.
+3. Download the `get_ecr` script to fetch the latest docker image: `wget https://raw.githubusercontent.com/kiedanski/dataloader-benchmarks/main/scripts/get_erc.sh && chmod +x get_ecr.sh`
+4. Download the latest docker image locally: `./get_ecr.sh`
+5. Download the run script: `wget https://raw.githubusercontent.com/kiedanski/dataloader-benchmarks/main/scripts/run.sh && chmod +x run.sh` 
+6. Execute the run command to get into the docker container: `./run.sh`
+7. Run all the experiments: `./experiments/run_all.sh`
 
 
-## CIFAR 10
+## Collecting results and plotting
 
-Running all CIFAR10 experiments:
+Inside the container run:
 
-### Preparing the datasets
+1. `python src/plots/download_results.py`
+2. `python src/plots/generate_plots.py`
 
-```sh
-python src/datasets/prepare.py --library pytorch
-python src/datasets/prepare.py --library ffcv
-python src/datasets/prepare.py --library hub
-python src/datasets/prepare.py --library hub --remote
-python src/datasets/prepare.py --library webdataset
-python src/datasets/prepare.py --library webdataset --remote
-python src/datasets/prepare.py --library torchdata
-
-```
-
-> **_NOTE_:** webdataset --remote requires s3cmd that needs to be manually configured. For this, ssh into the container and run s3cmd --configure. Some important points. 1) If testing locally, answer "no" to HTTPS. 2) The test might fail, in any case answer yes to save the configuration. 3) In my experience using %(bucket) as the url format works fine.
-
-### Running the benchmarks
-
-```sh
-export E=100
-export PS=20
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library pytorch
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library ffcv
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library hub
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library hub --remote
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library webdataset
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library webdataset --remote
-python src/run.py --epochs $E --profiling-epochs 0 10 30 50 --profiling-steps $PS --library torchdata
-
-```
-
-## COCO
-
-Running all COCO experiments:
-
-### Preparing the datasets
-
-```sh
-python src/datasets/prepare.py --dataset coco --library pytorch
-python src/datasets/prepare.py --dataset coco --library webdataset
-python src/datasets/prepare.py --dataset coco --library hub
-
-```
-
-> **_NOTE_:** webdataset --remote requires s3cmd that needs to be manually configured. For this, ssh into the container and run s3cmd --configure. Some important points. 1) If testing locally, answer "no" to HTTPS. 2) The test might fail, in any case answer yes to save the configuration. 3) In my experience using %(bucket) as the url format works fine.
-
-### Running the benchmarks
-
-```sh
-export E=2
-export PS=20
-export BS=2
-export LW=2
-python src/run.py --epochs $E --profiling-epochs 0 5 --profiling-steps $PS --batch-size $BS --loader-workers $LW --dataset coco --library pytorch
-python src/run.py --epochs $E --profiling-epochs 0 5 --profiling-steps $PS --batch-size $BS --loader-workers $LW --dataset coco --library hub
-python src/run.py --epochs $E --profiling-epochs 0 5 --profiling-steps $PS --batch-size $BS --loader-workers $LW --dataset coco --library webdataset
-
-```
-
-## Filtering Functionality
-
-### Prepare datasets
-
-This is the same procedure as used for cifar and coco.
-
-### Running the benchmarks
-
-```sh
-export E=10
-python src/run.py --epochs $E --filtering --library pytorch
-python src/run.py --epochs $E --filtering --library hub
-python src/run.py --epochs $E --filtering --library torchdata
-
-```
-
-## Comparing performance versus workers and batch size
-
-```sh
-#!/usr/bin/env bash
-# run_exp.sh
-
-E=2
-libs=( "pytorch" "hub" "webdataset" "ffcv" "torchdata")
-
-for i in {1..3};
-do
-  for lib in ${libs[@]}
-    do
-      python src/run.py --library $lib --loader-workers $i
-    done
-done
-```
-
-
-# Configuration of GOOGLE API
-
-It is important to add the GOOGLE_API 
 
 
 # Implemented Libraries and Datasets
@@ -186,14 +56,14 @@ It is important to add the GOOGLE_API
 |          |           | Pytorch | FFCV | Hub | Hub3 | Torchdata | Webdataset | Squirrel |
 | -------- | --------- | ------- | ---- | --- | ---- | --------- | ---------- | -------- |
 | CIFAR-10 | default   | ✅      | ✅   | ✅  | ✅   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ✅   | ✅  | ❌   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❓   | ✅  | ❌   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ❓      | ❓   | ❓  | ❌   | ❓        | ❓         |  ❓        |
+|          | remote    | ❌      | ✅   | ✅  | ✅   | ❌        | ✅         |  ❓        |
+|          | filtering | ✅      | ❓   | ✅  | ✅   | ✅        | ✅         |  ❓        |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅   | ✅        | ✅         |  ✅        |
 | RANDOM   | default   | ✅      | ✅   | ✅  | ✅   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ✅   | ✅  | ❌   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❓   | ✅  | ❓   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ❓      | ❓   | ❓  | ❌   | ❓        | ❓         |  ❓        |
-| CoCo     | default   | ✅      | ❌   | ✅  | ❓   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ❌   | ✅  | ❓   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❌   | ✅  | ❓   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ❓      | ❓   | ❓  | ❌   | ❓        | ❓         |  ❓        |
+|          | remote    | ❌      | ✅   | ✅  | ✅   | ❌        | ✅         |  ❓        |
+|          | filtering | ✅      | ❓   | ✅  | ✅   | ✅        | ✅         |  ❓        |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅   | ✅        | ✅         |  ✅        |
+| CoCo     | default   | ✅      | ❌   | ✅  | ✅   | ✅        | ✅         |  ✅        |
+|          | remote    | ❌      | ❌   | ✅  | ✅   | ❌        | ✅         |  ❓        |
+|          | filtering | ✅      | ❌   | ✅  | ✅   | ✅        | ✅         |  ❓        |
+|          | multi-gpu | ✅      | ❌   | ❌  | ✅   | ✅        | ✅         |  ✅        |

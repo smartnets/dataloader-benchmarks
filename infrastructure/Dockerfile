@@ -1,7 +1,7 @@
 FROM nvidia/cuda:11.2.1-base-ubuntu20.04
 ARG USER="worker"
 ARG UID="1002"
-ARG INDRA="indra-0.0.3-py3-none-any.whl"
+ARG INDRA="indra-0.0.4-py3-none-any.whl"
 ENV DEBIAN_FRONTEND "noninteractive"
 
 ENV PATH "$PATH:/usr/local"
@@ -49,6 +49,7 @@ RUN python -m pip install /tmp/$INDRA
 WORKDIR /home/$USER/workspace
 USER $USER
 COPY --chown=$USER src /home/$USER/workspace/src
+COPY --chown=$USER params.yaml /home/$USER/workspace/params.yaml
 COPY --chown=$USER experiments /home/$USER/workspace/experiments
 COPY --chown=$USER scripts/entrypoint.sh /home/$USER/entrypoint.sh
 

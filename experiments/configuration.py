@@ -1,7 +1,7 @@
 EXPERIMENTS = {
     "random": {
-        "batch_size": [32],
-        "workers": [0, 1, 2],
+        "batch_size": [16, 32, 128],
+        "workers": [0, 1, 2, 4],
         "libraries": {
             "single-gpu": [
                 "ffcv",
@@ -36,13 +36,14 @@ EXPERIMENTS = {
                 "webdataset-remote",
             ],
         },
-        "is_cutoff_run_model": [True],
+        "is_cutoff_run_model": [True, False],
         "filtering_classes": ["0", "13"],
         "cutoff": 10,
+        "reps": 3,
     },
     "cifar10": {
-        "batch_size": [16, 32],
-        "workers": [0, 1, 2],
+        "batch_size": [16, 32, 128, 256],
+        "workers": [0, 1, 2, 4],
         "libraries": {
             "single-gpu": [
                 "ffcv",
@@ -78,43 +79,48 @@ EXPERIMENTS = {
             ],
         },
         "filtering_classes": ["dog", "truck"],
-        "is_cutoff_run_model": [True],
+        "is_cutoff_run_model": [True, False],
         "cutoff": 10,
+        "reps": 3,
     },
     "coco": {
-        "batch_size": [1, 2],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
-        "workers": [0, 1],  # , 8, 16, 32],
+        "batch_size": [1, 2, 4],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
+        "workers": [0, 1, 2],  # , 8, 16, 32],
         "libraries": {
             "single-gpu": [
-                # "hub", # works
-                # "hub-remote",
-                # "hub3",
-                # "pytorch", # works
+                "hub", # works
+                "hub-remote",
+                "hub3",
+                "hub3-remote",
+                "pytorch", # works
                 "squirrel", # works
-                # "torchdata", # works
-                # "webdataset", # works
-                # "webdataset-remote", # works
+                "torchdata", # works
+                "webdataset", # works
+                "webdataset-remote", # works
             ],
             "multi-gpu": [
-                # "hub3"
-                # "pytorch", # works
+                "hub3", # works
+                "hub3-remote", # works
+                "pytorch", # works
                 "squirrel", # works
-                # "torchdata", # works
-                # "webdataset", # works
-                # "webdataset-remote", # works
+                "torchdata", # works
+                "webdataset", # works
+                "webdataset-remote", # works
             ],
             "filtering": [
                 # "pytorch", # don't run, too slow
-                # "torchdata", # works 
-                # "webdataset",
-                # "webdataset-remote",
-                # "hub", # works
+                "torchdata", # works 
+                "webdataset",
+                "webdataset-remote",
+                "hub", # works
                 "hub-remote",
-                # "hub3" # not working yet
+                "hub3", # works
+                "hub3-remote",
             ],
         },
         "is_cutoff_run_model": [True],
         "filtering_classes": ["pizza", "couch", "cat"],
-        "cutoff": 5,
+        "cutoff": 10,
+        "reps": 3,
     },
 }
