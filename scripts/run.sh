@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# run.sh
+
+set -o allexport
+source .env
+set +o allexport
+
 docker run \
      --rm \
      -it \
@@ -9,5 +13,5 @@ docker run \
      --env-file .env \
      -v benchmarks-datasets:/home/worker/workspace/datasets \
      -v benchmarks-results:/home/worker/workspace/results \
-     ml-benchmarks:2.0  \
+     "$DOCKER_NAME" \
      "$@"
