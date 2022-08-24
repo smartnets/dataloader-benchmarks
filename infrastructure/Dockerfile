@@ -1,7 +1,7 @@
 FROM nvidia/cuda:11.2.1-base-ubuntu20.04
 ARG USER="worker"
 ARG UID="1002"
-ARG INDRA="indra-0.0.4-py3-none-any.whl"
+ARG INDRA="indra-0.0.5-py3-none-any.whl"
 ENV DEBIAN_FRONTEND "noninteractive"
 
 ENV PATH "$PATH:/usr/local"
@@ -27,7 +27,14 @@ RUN useradd -u $UID -ms /bin/bash $USER \
 
 RUN  echo "Yes" | dpkg-reconfigure wireshark-common 
 
-RUN python -m pip install --pre torch torchvision torchaudio torchdata --extra-index-url https://download.pytorch.org/whl/nightly/cu113
+
+Run echo "a"
+
+COPY infrastructure/install.sh /tmp/install.sh
+RUN chmod +x /tmp/install.sh && /bin/bash /tmp/install.sh
+
+RUN python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+
 COPY infrastructure/requirements/req.txt /tmp/req.txt
 RUN python -m pip install -r /tmp/req.txt
 
@@ -37,10 +44,6 @@ RUN git clone https://github.com/pdollar/coco/ \
     && python setup.py install \
     && cd ../.. \
     && rm -r coco
-
-
-COPY infrastructure/install.sh /tmp/install.sh
-RUN chmod +x /tmp/install.sh && /bin/bash /tmp/install.sh
 
 COPY infrastructure/$INDRA  /tmp/$INDRA
 RUN python -m pip install /tmp/$INDRA

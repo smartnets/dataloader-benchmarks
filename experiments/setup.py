@@ -1,4 +1,5 @@
 import os
+import datetime
 
 
 def configure_env(
@@ -11,9 +12,17 @@ def configure_env(
     multi_gpu,
     filtering,
     filtering_classes,
+    rep,
+    filename,
 ):
 
-    print(batch_size, num_workers, library)
+    now = datetime.datetime.now().isoformat()
+    iteration_text = (
+        f"{rep:<2}, {batch_size:<3}, {num_workers:<2}, {library:<15}: {now}"
+    )
+    print(iteration_text)
+    with open(filename, "a") as fh:
+        fh.write(iteration_text + "\n")
 
     os.environ["DYNACONF_LIBRARY"] = library.replace("-remote", "")
     os.environ["DYNACONF_DATASET"] = dataset

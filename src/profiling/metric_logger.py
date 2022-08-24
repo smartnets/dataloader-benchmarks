@@ -14,8 +14,6 @@ from src.profiling.metrics import (
     log_gpu,
 )
 from src.analysis.extract_metrics import collect_metrics
-from src.utils.google_api import upload_results
-
 from src.config import settings as st
 from copy import deepcopy
 
@@ -128,20 +126,10 @@ class MetricLogger(object):
             profiler.stop()
         epoch_times["end"] = time.perf_counter() - absolute_start
 
-        # if self.runtime == 0:
-        #     self.runtime = epoch_times["end"]
-
         self.timer_epochs[epoch] = epoch_times
         self.completed_epochs += 1
         print("\n")
 
-    def _save_times(self):
-        final_dict = {
-            "epochs": self.timer_epochs,
-            "loaders": self.timer_loader,
-        }
-        with open(self.path / "times.json", "w") as fh:
-            json.dump(final_dict, fh)
 
     def _save_loss(self):
         with open(self.path / "loss.txt", "w") as fh:
@@ -168,8 +156,8 @@ class MetricLogger(object):
         with open(self.path / "parameters.json", "w") as fh:
             json.dump(final_dict, fh, indent=2)
 
-        if st.ENV_FOR_DYNACONF == "prod":
-            upload_results(final_dict)
+        # if st.ENV_FOR_DYNACONF == "prod":
+        #     upload_results(final_dict)
 
     def get_results_dict(self):
         """
@@ -189,9 +177,10 @@ class MetricLogger(object):
         # We are taking the time per batch and calculating the speed per batch
         # Then, we are taking the average. The first batch is considerably slower
         runtime = np.diff(self.runtime)
-        speed = (st.batch_size / runtime).mean()
+        speed = np.median(st.batch_size / runtime)
 
         res_dict = {
+            "dataloader_start_time": self.timer_loader,
             "date": datetime.datetime.now().isoformat(),
             "all_runtimes": list(x for x in runtime),
             "runtime": self.runtime[-1],
@@ -235,6 +224,5 @@ class MetricLogger(object):
 
     def persist_metrics(self):
 
-        self._save_times()
         self._save_loss()
         self._save_params()

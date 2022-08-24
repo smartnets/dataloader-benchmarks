@@ -14,36 +14,38 @@ from torch.utils.data import default_collate
 
 from src.datasets.transformations.custom import CustomTransform
 
+
 def aug(augmentation, r):
     return augmentation(r)
+
 
 def augmentation_multi_gpu(augmentation, r) -> t.Dict[str, t.Any]:
     return {"images": augmentation(r["jpg"]), "labels": r["cls"]}
 
+
 def augmentation_single_gpu(augmentation, r):
     return (augmentation(r["jpg"]), r["cls"])
+
 
 AUGMENTATION_MAPS = {
     "classification": {
         "single": augmentation_single_gpu,
-        "multi": augmentation_multi_gpu
+        "multi": augmentation_multi_gpu,
     },
-    "coco": {
-        "single": aug,
-        "multi": aug,
-    }
+    "coco": {"single": aug, "multi": aug,},
 }
+
 
 def collate_coco(batch):
     return tuple(zip(*batch))
 
+
 def filter_based_on_labels(active_labels, sample):
     return sample[1] in active_labels
 
-COLLATE_FNS = {
-    "classification": default_collate,
-    "coco": collate_coco
-}
+
+COLLATE_FNS = {"classification": default_collate, "coco": collate_coco}
+
 
 def build_dataset(
     path,
@@ -56,7 +58,7 @@ def build_dataset(
 ):
 
     # c_fn = collate if distributed else default_collate
-    c_fn = COLLATE_FNS[dataset_kind] 
+    c_fn = COLLATE_FNS[dataset_kind]
     AM = AUGMENTATION_MAPS[dataset_kind]
     path = str(path)
     # t = CustomTransform(transformations, distributed)

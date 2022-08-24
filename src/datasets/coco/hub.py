@@ -1,7 +1,4 @@
 import hub
-import logging
-import sys
-import numpy as np
 from src.datasets.base import Dataset
 from src.datasets.coco.base import get_coco, LABEL_DICT
 from src.config import settings as st
@@ -39,9 +36,9 @@ class HubDataset(Dataset):
 
     def generate_locally(self, mode="train", transforms=None):
 
-        is_train = mode in ["train", "val"]
-        path = self.get_local_path()
-        path /= f"{mode}"
+        path = super().generate_locally(mode, transforms)
+        if not path:
+            return None
 
         coco = get_coco(mode, None)
 
@@ -51,27 +48,22 @@ class HubDataset(Dataset):
 
     def generate_remotely(self, mode="train", transforms=None):
 
-        r_path = self.get_remote_path()
-        r_path += f"/{mode}"
+        path = super().generate_remotely(mode, transforms)
+        if not path:
+            return None
 
         coco = get_coco(mode, None)
 
-        ds = hub.empty(str(r_path), creds=st.s3_creds, overwrite=True)
+        ds = hub.empty(str(path), creds=get_s3_creds(), overwrite=True)
 
         return self._create(coco, ds)
 
     def get_local(self, mode="train", transforms=None):
-        is_train = mode in ["train", "val"]
-
         path = self.get_local_path()
         path /= f"{mode}"
-
-        ds = hub.load(str(path))
-        return ds
+        return  hub.load(str(path))
 
     def get_remote(self, mode="train", transforms=None):
         r_path = self.get_remote_path()
         r_path += f"/{mode}"
-
-        ds = hub.load(str(r_path), creds=get_s3_creds())
-        return ds
+        return  hub.load(str(r_path), creds=get_s3_creds())

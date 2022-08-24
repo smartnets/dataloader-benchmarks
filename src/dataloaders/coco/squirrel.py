@@ -9,7 +9,6 @@ from functools import partial
 DATASET = CocoDatasets["squirrel"]
 
 
-
 def identity(x, y):
     return x, y
 
@@ -20,6 +19,7 @@ def aux(mode, sample):
     boxes = sample["boxes"]
     target = {"categories": labels, "boxes": boxes}
     return core_transform(mode, identity, image, target)
+
 
 class SquirrelLoader(DataLoader):
     def _get(self, mode, **kwargs):
@@ -50,7 +50,7 @@ class SquirrelLoader(DataLoader):
         return loader
 
     def get_train_loader(self, **kwargs):
-        return self._get("train",**kwargs)
+        return self._get("train", **kwargs)
 
     def get_val_loader(self, **kwargs):
         return self._get("val", **kwargs)

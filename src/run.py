@@ -6,17 +6,22 @@ import torch.multiprocessing as mp
 from pprint import pprint
 import time
 
-from src.utils.distributed import setup, cleanup
+from src.utils.distributed import setup, cleanup, get_open_port
 import torch.distributed as dist
 
 from src.config import settings as st
 from src.train import setup as train_setup
-from src.train import wrap_up as wrap_up_train
 from src.utils.general import should_run_test
 from src.utils.time import get_current_timestamp
 from src.utils.persist import is_s3_up, persist_results
 from src.utils.general import config_to_bool
 
+from src.utils.experiments import record_new_run, record_completed_run
+
+
+import warnings
+
+warnings.filterwarnings("ignore")
 
 LOADER_SWITCHER = {
     "cifar10": CIFAR10Loaders,
@@ -25,20 +30,16 @@ LOADER_SWITCHER = {
 }
 
 
-def main(rank, world_size, run_id):
+def main(rank, world_size, run_id, port):
     # setup the process groups
+
+    record_new_run(run_id)
+
     distributed = config_to_bool(st.distributed)
     filtering = config_to_bool(st.filtering)
 
-    # if st.filtering == "False":
-    #     st.filtering = config_to_bool(st.filtering)
-    # else:
-    #     ## Hardcoded values for filtering
-    #     st.filtering = ["ship", "truck"]
-
-    print("is distributed", distributed)
     if distributed:
-        setup(rank, world_size)
+        setup(rank, world_size, port)
 
     outputs = [None for _ in range(world_size)]
 
@@ -82,18 +83,18 @@ def main(rank, world_size, run_id):
     if distributed:
         cleanup()
 
-    with open(st.name + ".txt", "a") as fh:
-        fh.write(f"{st.batch_size}, {st.num_workers}, {st.library}\n")
+    record_completed_run(run_id)
 
 
 if __name__ == "__main__":
 
     id_ = get_current_timestamp()
+    open_port = get_open_port()
     start = time.perf_counter()
     if config_to_bool(st.distributed):
-        mp.spawn(main, args=(st.world_size, id_), nprocs=st.world_size)
+        mp.spawn(main, args=(st.world_size, id_, open_port), nprocs=st.world_size)
     else:
-        main(0, st.world_size, id_)
+        main(0, st.world_size, id_, open_port)
 
     elapsed = time.perf_counter() - start
     print(f"Total time: {elapsed:.2f}")

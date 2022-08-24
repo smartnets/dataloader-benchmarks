@@ -114,11 +114,10 @@ def get_gpu_name():
 
 def collect_metrics(path):
 
-    time = get_times_stats(path)
     gpu = get_gpu_usage(path)
     cpu = get_cpu_usage(path)
     gpu_name = get_gpu_name()
-    final = {**time, **gpu, **cpu, **gpu_name}
+    final = {**gpu, **cpu, **gpu_name}
     return final
 
 

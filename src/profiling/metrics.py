@@ -18,7 +18,9 @@ def log_nvidia_smi(path: Path):
         path / "nvidia-smi.log",
     ]
 
-    pid = subprocess.Popen(NVIDIA_SMI_ARGS)
+    pid = subprocess.Popen(
+        NVIDIA_SMI_ARGS, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT
+    )
     return pid
 
 
@@ -32,7 +34,7 @@ def log_cpu(path: Path, pid: int):
         str(pid),
         str(path / "cpu_usage.txt"),
     ]
-    pid = subprocess.Popen(ARGS)
+    pid = subprocess.Popen(ARGS, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     return pid
 
 
@@ -45,7 +47,7 @@ def log_gpu(path: Path):
         "/home/worker/workspace/src/profiling/gpu_usage.sh",
         str(path / "gpu_usage.txt"),
     ]
-    pid = subprocess.Popen(ARGS)
+    pid = subprocess.Popen(ARGS, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     return pid
 
 
@@ -56,7 +58,7 @@ def log_nvidia_dmon(path):
 
     ARGS = ["nvidia-smi", "dmon", "-o", "DT", "-f", path / "nvidia-dmon.log"]
 
-    pid = subprocess.Popen(ARGS)
+    pid = subprocess.Popen(ARGS, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     return pid
 
 
@@ -66,25 +68,9 @@ def log_tcpdump(path):
         path = Path(path)
 
     ARGS = ["tcpdump", "-s", "96", "udp", "or", "tcp", "-w", path / "dump.pcap"]
-    pid = subprocess.Popen(ARGS)
+    pid = subprocess.Popen(ARGS, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
     return pid
 
 
 if __name__ == "__main__":
     pass
-    # import os
-    # print(os.getpid())
-    # while 1:
-    #     time.sleep(1)
-    # p_nsmi = log_nvidia_smi("nvidia.log")
-    # p_ndmn = log_nvidia_dmon("nvidia_dmon.log")
-    # p_tdump = log_tcpdump("tcp")
-
-    # for i in range(10):
-    #     print(i)
-    #     requests.get(f"http://www.google.com/q={i}")
-    #     time.sleep(1)
-
-    # p_nsmi.terminate()
-    # p_ndmn.terminate()
-    # p_tdump.terminate()

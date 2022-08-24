@@ -48,9 +48,9 @@ def get_worker_info():
     return total_workers, global_worker_id
 
 
-def setup(rank, world_size):
+def setup(rank, world_size, port):
     os.environ["MASTER_ADDR"] = "localhost"
-    os.environ["MASTER_PORT"] = "12356"
+    os.environ["MASTER_PORT"] = str(port)
     dist.init_process_group("nccl", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
 
@@ -82,3 +82,9 @@ def reduce_dict(input_dict, average=True):
         values /= world_size
     reduced_dict = {k: v for k, v in zip(names, values)}
     return reduced_dict
+
+def get_open_port():
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        s.bind(('', 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        return s.getsockname()[1]

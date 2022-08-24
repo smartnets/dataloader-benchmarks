@@ -1,4 +1,5 @@
 import argparse
+from re import sub
 import subprocess
 import time
 from itertools import product
@@ -6,13 +7,14 @@ from itertools import product
 from experiments.setup import configure_env
 from experiments.configuration import EXPERIMENTS
 from src.utils.setup_s3cmd import setup_s3cmd
+from src.utils.experiments import cleanup_runs_files
 
 
 def skip_experiment(bs, nw, lb):
     if nw >= bs:
         return True
-    if lb == "hub3" and nw >= 2:
-        return True
+    # if lb == "hub3" and nw > 0:
+    #     return True
     return False
 
 
@@ -40,9 +42,16 @@ if __name__ == "__main__":
         dest="filtering",
         help="Use this flag to enable filtering [default: False]",
     )
+    parser.add_argument(
+        "--filename",
+        default="run_results.txt",
+        dest="filename",
+        help="Filename to record running times",
+    )
     args = parser.parse_args()
 
     setup_s3cmd()
+    cleanup_runs_files()
 
     gpu_mode = "multi-gpu" if args.multi_gpu else "single-gpu"
 
@@ -74,9 +83,15 @@ if __name__ == "__main__":
                 args.multi_gpu,
                 args.filtering,
                 FC,
+                rep,
+                args.filename,
             )
-            ARGS = ["python", "src/run.py"]
-            pid = subprocess.Popen(ARGS)
-            pid.wait()
+            ARGS = ["python", "-Wignore", "src/run.py"]
+            try:
+                pid = subprocess.Popen(ARGS)
+                pid.wait(timeout=120)  # 60 seconds
+            except subprocess.TimeoutExpired:
+                print(f"Timeout Expired: {batch_size}, {num_workers}, {library}, {rep}")
+                pid.kill()
 
             time.sleep(1)

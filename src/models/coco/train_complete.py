@@ -170,10 +170,7 @@ def get_args_parser(add_help=True):
         help="data augmentation policy (default: hflip)",
     )
     parser.add_argument(
-        "--sync-bn",
-        dest="sync_bn",
-        help="Use sync batch norm",
-        action="store_true",
+        "--sync-bn", dest="sync_bn", help="Use sync batch norm", action="store_true",
     )
     parser.add_argument(
         "--test-only",

@@ -4,11 +4,6 @@ from src.config import settings as st
 from src.utils.general import config_to_list, should_run_test, config_to_bool
 
 
-def wrap_up(loader, metric_logger, rank: int = 0):
-    metric_logger.end_side_collectors()
-    metric_logger.persist_metrics()
-
-
 def setup(model_, loader_, rank: int = 0, run_id: str = "0"):
 
     distributed = config_to_bool(st.distributed)

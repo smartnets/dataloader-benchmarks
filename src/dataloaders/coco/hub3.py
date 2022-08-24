@@ -1,14 +1,12 @@
 from src.dataloaders.base import DataLoader
 from src.datasets.coco.index import CocoDatasets
-from src.datasets.coco.base import (
-    LABEL_DICT,
-    core_transform
-)
+from src.datasets.coco.base import LABEL_DICT, core_transform
 from indra import Loader
 from src.libraries.hub3 import filter_by_class
 from functools import partial
 
 DATASET = CocoDatasets["hub3"]
+
 
 def identity(x, y):
     t = {}
@@ -24,6 +22,7 @@ def aux(mode, sample):
 
 def collate_fn(batch):
     return tuple(zip(*batch))
+
 
 class Hub3Loader(DataLoader):
     transform = None
@@ -57,7 +56,6 @@ class Hub3Loader(DataLoader):
 
     def get_val_loader(self, **kwargs):
         return self._get("val", **kwargs)
-
 
     # def transform_hub(self, sample):
     #     sample["images"] = self.transform(sample["images"])

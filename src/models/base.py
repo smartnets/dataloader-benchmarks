@@ -23,11 +23,7 @@ class Model(ABC):
 
         model = model.to(device)
         if distributed:
-            model = DDP(
-                model,
-                device_ids=[rank],
-                output_device=[device],
-            )
+            model = DDP(model, device_ids=[rank], output_device=[device],)
 
         model.train()
 

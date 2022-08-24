@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
+NAME="results/results_all_experiments.txt"
 
-./experiments/prepare_cifar10.sh
-./experiments/prepare_random.sh
-./experiments/prepare_coco.sh
+function print_time {
+    now=$(date)
+    echo "$now: $@" >> "$NAME.txt"
+}
 
-python experiments/run_benchmarks.py --dataset cifar10
-python experiments/run_benchmarks.py --dataset cifar10 --multi-gpu
-python experiments/run_benchmarks.py --dataset cifar10 --filtering
+print_time "prepare cifar" && ./experiments/prepare_cifar10.sh 
+print_time "prepare random" && ./experiments/prepare_random.sh
+print_time "prepare coco" && ./experiments/prepare_coco.sh
 
-python experiments/run_benchmarks.py --dataset random
-python experiments/run_benchmarks.py --dataset random --multi-gpu
-python experiments/run_benchmarks.py --dataset random --filtering
+print_time "cifar10 def" && python experiments/run_benchmarks.py --dataset cifar10 --filename $NAME
+print_time "cifar10 multi" && python experiments/run_benchmarks.py --dataset cifar10 --multi-gpu  --filename $NAME
+print_time "cifar10 filter" && python experiments/run_benchmarks.py --dataset cifar10 --filtering --filename $NAME
 
-python experiments/run_benchmarks.py --dataset coco
-python experiments/run_benchmarks.py --dataset coco --multi-gpu
-python experiments/run_benchmarks.py --dataset coco --filtering
+print_time "random def" && python experiments/run_benchmarks.py --dataset random --filename $NAME
+print_time "random multi" && python experiments/run_benchmarks.py --dataset random --multi-gpu  --filename $NAME
+print_time "random filter" && python experiments/run_benchmarks.py --dataset random --filtering --filename $NAME
+
+print_time "coco def" && python experiments/run_benchmarks.py --dataset coco --filename $NAME
+print_time "coco multi" && python experiments/run_benchmarks.py --dataset coco --multi-gpu  --filename $NAME
+print_time "coco filter" && python experiments/run_benchmarks.py --dataset coco --filtering --filename $NAME

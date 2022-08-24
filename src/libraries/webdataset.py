@@ -17,9 +17,13 @@ def intersection_nonempty(list_a, list_b):
     set_b = set(list_b)
     return len(set_a.intersection(set_b)) > 0
 
+
 def filter_by_multiclass(active_classes, dataset):
-    dataset = dataset.filter(filter_fn=lambda x: intersection_nonempty(x[1]["labels"], active_classes))
+    dataset = dataset.filter(
+        filter_fn=lambda x: intersection_nonempty(x[1]["labels"], active_classes)
+    )
     return dataset
+
 
 def my_split_shards(distributed, urls):
     total_workers, global_worker_id = get_worker_info()
@@ -70,10 +74,7 @@ def build_loader(
 ):
 
     loader = wds.WebLoader(
-        dataset,
-        batch_size=None,
-        shuffle=False,
-        num_workers=num_workers,
+        dataset, batch_size=None, shuffle=False, num_workers=num_workers,
     )
     number_of_batches = size // batch_size
     if distributed:
