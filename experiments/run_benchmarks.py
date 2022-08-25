@@ -94,4 +94,4 @@ if __name__ == "__main__":
                 print(f"Timeout Expired: {batch_size}, {num_workers}, {library}, {rep}")
                 pid.kill()
 
-            time.sleep(1)
+            time.sleep(3)

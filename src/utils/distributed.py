@@ -6,6 +6,8 @@ import torch.distributed as dist
 import torch.nn as nn
 import torch.optim as optim
 import torch.multiprocessing as mp
+from contextlib import closing
+import socket
 
 from torch.nn.parallel import DistributedDataParallel as DDP
 
