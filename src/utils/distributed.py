@@ -85,8 +85,9 @@ def reduce_dict(input_dict, average=True):
     reduced_dict = {k: v for k, v in zip(names, values)}
     return reduced_dict
 
+
 def get_open_port():
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
-        s.bind(('', 0))
+        s.bind(("", 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return s.getsockname()[1]

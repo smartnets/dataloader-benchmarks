@@ -48,6 +48,7 @@ RUN git clone https://github.com/pdollar/coco/ \
 COPY infrastructure/$INDRA  /tmp/$INDRA
 RUN python -m pip install /tmp/$INDRA
 
+RUN apt-get install -y lm-sensors
 
 WORKDIR /home/$USER/workspace
 USER $USER
@@ -56,4 +57,7 @@ COPY --chown=$USER params.yaml /home/$USER/workspace/params.yaml
 COPY --chown=$USER experiments /home/$USER/workspace/experiments
 COPY --chown=$USER scripts/entrypoint.sh /home/$USER/entrypoint.sh
 
+
+
 ENTRYPOINT ["/bin/bash", "/home/worker/entrypoint.sh"]
+

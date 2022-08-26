@@ -16,7 +16,8 @@ from src.utils.time import get_current_timestamp
 from src.utils.persist import is_s3_up, persist_results
 from src.utils.general import config_to_bool
 
-from src.utils.experiments import record_new_run, record_completed_run
+from src.utils.experiments import record_run, is_run_completed
+import sys
 
 
 import warnings
@@ -33,7 +34,7 @@ LOADER_SWITCHER = {
 def main(rank, world_size, run_id, port):
     # setup the process groups
 
-    record_new_run(run_id)
+    record_run("new")
 
     distributed = config_to_bool(st.distributed)
     filtering = config_to_bool(st.filtering)
@@ -83,13 +84,17 @@ def main(rank, world_size, run_id, port):
     if distributed:
         cleanup()
 
-    record_completed_run(run_id)
+    record_run("completed")
 
 
 if __name__ == "__main__":
 
     id_ = get_current_timestamp()
     open_port = get_open_port()
+
+    if is_run_completed():
+        sys.exit()
+
     start = time.perf_counter()
     if config_to_bool(st.distributed):
         mp.spawn(main, args=(st.world_size, id_, open_port), nprocs=st.world_size)

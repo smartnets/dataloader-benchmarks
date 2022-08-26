@@ -1,20 +1,21 @@
 import argparse
-from re import sub
 import subprocess
 import time
 from itertools import product
 
+import re
 from experiments.setup import configure_env
 from experiments.configuration import EXPERIMENTS
 from src.utils.setup_s3cmd import setup_s3cmd
 from src.utils.experiments import cleanup_runs_files
 
 
+reg = re.compile(r"Core.*?\+(\d\d\d?\.\d)°C\s.*")
+
+
 def skip_experiment(bs, nw, lb):
     if nw >= bs:
         return True
-    # if lb == "hub3" and nw > 0:
-    #     return True
     return False
 
 
@@ -51,7 +52,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     setup_s3cmd()
-    cleanup_runs_files()
 
     gpu_mode = "multi-gpu" if args.multi_gpu else "single-gpu"
 
@@ -93,5 +93,3 @@ if __name__ == "__main__":
             except subprocess.TimeoutExpired:
                 print(f"Timeout Expired: {batch_size}, {num_workers}, {library}, {rep}")
                 pid.kill()
-
-            time.sleep(3)

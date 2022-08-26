@@ -39,7 +39,7 @@ EXPERIMENTS = {
         "is_cutoff_run_model": [True],
         "filtering_classes": ["0", "13"],
         "cutoff": 10,
-        "reps": 1,
+        "reps": 2,
     },
     "cifar10": {
         "batch_size": [32, 128],
@@ -81,7 +81,7 @@ EXPERIMENTS = {
         "filtering_classes": ["dog", "truck"],
         "is_cutoff_run_model": [True],
         "cutoff": 10,
-        "reps": 1,
+        "reps": 2,
     },
     "coco": {
         "batch_size": [1, 2],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
@@ -121,6 +121,6 @@ EXPERIMENTS = {
         "is_cutoff_run_model": [True],
         "filtering_classes": ["pizza", "couch", "cat"],
         "cutoff": 10,
-        "reps": 1,
+        "reps": 2,
     },
 }

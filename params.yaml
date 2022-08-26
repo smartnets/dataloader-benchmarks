@@ -1,4 +1,5 @@
 num_workers: 8
+rep: 0
 world_size: 2
 batch_size: 32
 dataset: random
@@ -18,8 +19,8 @@ is_cutoff_run_model: true
 
 bucket_name: experiments
 local_data_dir: /home/worker/workspace/datasets
-record_new_runs_file: /home/worker/workspace/results/new_runs.txt
-record_completed_runs_file: /home/worker/workspace/results/completed_runs.txt
+record_new_runs_file: /home/worker/workspace/results/new_runs
+record_completed_runs_file: /home/worker/workspace/results/completed_runs
 remote_data_dir: "s3://{BUCKET_NAME}/datasets"
 local_results_dir: "/home/worker/workspace/results"
 downloaded_results_dir: "/home/worker/workspace/downloaded_results"

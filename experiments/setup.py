@@ -34,5 +34,6 @@ def configure_env(
     os.environ["DYNACONF_IS_CUTOFF_RUN_MODEL"] = str(is_cutoff_run_model)
     os.environ["DYNACONF_FILTERING"] = str(filtering)
     os.environ["DYNACONF_FILTERING_CLASSES"] = str(filtering_classes)
+    os.environ["DYNACONF_REP"] = str(rep)
 
     os.environ["PYTHONWARNINGS"] = "ignore:semaphore_tracker:UserWarning"

@@ -130,7 +130,6 @@ class MetricLogger(object):
         self.completed_epochs += 1
         print("\n")
 
-
     def _save_loss(self):
         with open(self.path / "loss.txt", "w") as fh:
 
