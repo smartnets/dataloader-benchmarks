@@ -48,8 +48,6 @@ RUN git clone https://github.com/pdollar/coco/ \
 COPY infrastructure/$INDRA  /tmp/$INDRA
 RUN python -m pip install /tmp/$INDRA
 
-RUN apt-get install -y lm-sensors
-
 WORKDIR /home/$USER/workspace
 USER $USER
 COPY --chown=$USER src /home/$USER/workspace/src

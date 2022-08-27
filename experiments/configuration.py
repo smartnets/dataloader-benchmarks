@@ -1,7 +1,7 @@
 EXPERIMENTS = {
     "random": {
-        "batch_size": [16, 64],
-        "workers": [0, 1],
+        "batch_size": [16, 64, 128],
+        "workers": [0, 1, 2],
         "libraries": {
             "single-gpu": [
                 "ffcv",
@@ -39,11 +39,11 @@ EXPERIMENTS = {
         "is_cutoff_run_model": [True],
         "filtering_classes": ["0", "13"],
         "cutoff": 10,
-        "reps": 2,
+        "reps": 3,
     },
     "cifar10": {
-        "batch_size": [32, 128],
-        "workers": [0, 1],
+        "batch_size": [32, 64, 128],
+        "workers": [0, 1, 2],
         "libraries": {
             "single-gpu": [
                 "ffcv",
@@ -81,11 +81,11 @@ EXPERIMENTS = {
         "filtering_classes": ["dog", "truck"],
         "is_cutoff_run_model": [True],
         "cutoff": 10,
-        "reps": 2,
+        "reps": 3,
     },
     "coco": {
-        "batch_size": [1, 2],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
-        "workers": [0, 1],  # , 8, 16, 32],
+        "batch_size": [1, 2, 4],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
+        "workers": [0, 1, 2],  # , 8, 16, 32],
         "libraries": {
             "single-gpu": [
                 "hub",  # works
@@ -121,6 +121,6 @@ EXPERIMENTS = {
         "is_cutoff_run_model": [True],
         "filtering_classes": ["pizza", "couch", "cat"],
         "cutoff": 10,
-        "reps": 2,
+        "reps": 3,
     },
 }

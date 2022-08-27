@@ -90,6 +90,6 @@ if __name__ == "__main__":
             try:
                 pid = subprocess.Popen(ARGS)
                 pid.wait(timeout=120)  # 60 seconds
-            except subprocess.TimeoutExpired:
+            except Exception as e:
                 print(f"Timeout Expired: {batch_size}, {num_workers}, {library}, {rep}")
                 pid.kill()
