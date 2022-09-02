@@ -22,7 +22,6 @@ class Hub3Dataset(Dataset):
         ds = hub.empty(str(path), overwrite=True)
         return create_dataset(random, ds, list(LABELS_DICT.keys()))
 
-
     def generate_remotely(self, mode="train", transforms=None):
 
         path = super().generate_remotely(mode, transforms)
@@ -42,4 +41,7 @@ class Hub3Dataset(Dataset):
         path = self.get_remote_path()
         path += f"/{mode}"
         creds = get_s3_creds()
-        return  api.dataset(str(path), **creds)
+
+        if creds["endpoint_url"] is None:
+            del creds["endpoint_url"]
+        return api.dataset(str(path), **creds)

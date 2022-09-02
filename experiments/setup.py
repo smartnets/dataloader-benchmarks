@@ -14,6 +14,7 @@ def configure_env(
     filtering_classes,
     rep,
     filename,
+    epochs,
 ):
 
     now = datetime.datetime.now().isoformat()
@@ -35,5 +36,6 @@ def configure_env(
     os.environ["DYNACONF_FILTERING"] = str(filtering)
     os.environ["DYNACONF_FILTERING_CLASSES"] = str(filtering_classes)
     os.environ["DYNACONF_REP"] = str(rep)
+    os.environ["DYNACONF_NUM_EPOCHS"] = str(epochs)
 
     os.environ["PYTHONWARNINGS"] = "ignore:semaphore_tracker:UserWarning"

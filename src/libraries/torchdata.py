@@ -3,7 +3,8 @@ from torchdata.datapipes.iter import IterableWrapper
 
 
 def build_dataset(
-    data, distributed: bool = False,
+    data,
+    distributed: bool = False,
 ):
     ds = IterableWrapper(data)
 

@@ -24,13 +24,13 @@ def setup(model_, loader_, rank: int = 0, run_id: str = "0"):
         "profiling_epochs": st.profiling_enabled,
         "profiling_steps": st.profiling_epochs_per_round,
         "automatic_gpu_transfer": loader.automatic_gpu_transfer,
-        "cutoff": st.cutoff,
+        "cutoff": int(st.cutoff),
         "distributed": distributed,
     }
 
     loader_kwargs = {
-        "batch_size": st.batch_size,
-        "num_workers": st.num_workers,
+        "batch_size": int(st.batch_size),
+        "num_workers": int(st.num_workers),
     }
     metric_logger = MetricLogger(run_id, rank)
     metric_logger.start_side_collectors()
@@ -40,7 +40,7 @@ def setup(model_, loader_, rank: int = 0, run_id: str = "0"):
     loaders["train"] = loader.get_train_loader(**loader_kwargs)
     metric_logger.log_time_loaders("train")
 
-    if st.cutoff < 0:
+    if int(st.cutoff) < 0:
         for ds, _get in zip(
             ["val", "test"], [loader.get_val_loader, loader.get_test_loader]
         ):

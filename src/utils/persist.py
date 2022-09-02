@@ -1,6 +1,7 @@
 import datetime
 from pathlib import Path
 import boto3
+import botocore
 from botocore.client import Config
 from botocore.client import ClientError
 from src.config import settings as st
@@ -34,6 +35,9 @@ def is_s3_up():
     except ClientError:
         print("Bucket unavailable")
         return False
+    except botocore.exceptions.EndpointConnectionError:
+        print("Bucket unavailable")
+        return False
         # The bucket does not exist or you have no access.
 
 
@@ -41,7 +45,7 @@ def get_s3_creds():
     return {
         "aws_access_key_id": st.AWS_ACCESS_KEY_ID,
         "aws_secret_access_key": st.AWS_SECRET_ACCESS_KEY,
-        "endpoint_url": st.S3_ENDPOINT,
+        "endpoint_url": st.S3_ENDPOINT if st.S3_ENDPOINT != "None" else None,
     }
 
 
