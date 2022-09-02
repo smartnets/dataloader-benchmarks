@@ -38,4 +38,4 @@ urllib3>=1.26.11
 viztracer
 webdataset
 yappi
-scienticplots
+SciencePlots
