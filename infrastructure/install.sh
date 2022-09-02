@@ -16,6 +16,6 @@ git clone --recurse-submodules https://github.com/aws/aws-sdk-cpp
 cd aws-sdk-cpp
 mkdir build
 cd build
-cmake .. -DBUILD_ONLY=s3 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DAUTORUN_UNIT_TESTS=OFF -DENABLE_TESTING=OFF
+cmake .. -DBUILD_ONLY=s3 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DAUTORUN_UNIT_TESTS=OFF -DENABLE_TESTING=OFF
 make
 make install
