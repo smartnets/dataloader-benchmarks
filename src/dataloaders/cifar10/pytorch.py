@@ -29,7 +29,11 @@ class PytorchLoader(DataLoader):
         if self.distributed:
             sampler = self.get_distributd_sampler(dataset)
 
-        loader = torch_data.DataLoader(dataset, **kwargs, sampler=sampler,)
+        loader = torch_data.DataLoader(
+            dataset,
+            **kwargs,
+            sampler=sampler,
+        )
         return loader
 
     def get_train_loader(self, **kwargs):

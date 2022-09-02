@@ -1,4 +1,5 @@
 from src.config import settings as st
+from src.utils.general import config_to_bool
 
 file_content = """[default]
 access_key = {aws_key}
@@ -92,12 +93,12 @@ website_index = index.html
 
 def setup_s3cmd():
 
-    is_dev = True
-    USE_HTTPS = not is_dev
-    S3_WITHOUT = st.s3_endpoint.split("//")[1] if is_dev else "s3.amazonaws.com"
+    is_aws = config_to_bool(st.IS_AWS)
+    USE_HTTPS = is_aws
+    S3_WITHOUT = st.s3_endpoint.split("//")[1] if not is_aws else "s3.amazonaws.com"
     ENDPOINT = (
         st.s3_endpoint
-        if is_dev
+        if not is_aws
         else "http://%(bucket)s.s3-website-%(location)s.amazonaws.com/"
     )
 

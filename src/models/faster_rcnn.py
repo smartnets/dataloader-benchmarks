@@ -38,7 +38,11 @@ class FasterRCNNModel(Model):
         init_values = {
             "model": get_model_instance_segmentation(),
             "optimizer": torch.optim.SGD,
-            "optimizer_args": {"lr": 0.005, "momentum": 0.9, "weight_decay": 0.0005,},
+            "optimizer_args": {
+                "lr": 0.005,
+                "momentum": 0.9,
+                "weight_decay": 0.0005,
+            },
             "criterion": nn.BCEWithLogitsLoss,
             "metric": MAP,
         }

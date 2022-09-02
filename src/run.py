@@ -60,11 +60,11 @@ def main(rank, world_size, run_id, port):
             train_loader.sampler.set_epoch(epoch)
         model.train(train_loader, epoch, metric_logger, **params)
 
-        if not filtering and st.cutoff < 0:
+        if not filtering and int(st.cutoff) < 0:
             model.evaluate(loaders["val"], epoch, "val", metric_logger, **params)
 
     if should_run_test():
-        if not filtering and st.cutoff < 0:
+        if not filtering and int(st.cutoff) < 0:
             model.evaluate(loaders["test"], 0, "test", metric_logger, **params)
 
     metric_logger.end_side_collectors()

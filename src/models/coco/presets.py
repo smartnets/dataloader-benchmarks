@@ -78,7 +78,10 @@ class DetectionPresetTrain:
 class DetectionPresetEval:
     def __init__(self):
         self.transforms = T.Compose(
-            [T.PILToTensor(), T.ConvertImageDtype(torch.float),]
+            [
+                T.PILToTensor(),
+                T.ConvertImageDtype(torch.float),
+            ]
         )
 
     def __call__(self, img, target):

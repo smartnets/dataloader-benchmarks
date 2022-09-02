@@ -74,7 +74,10 @@ def build_loader(
 ):
 
     loader = wds.WebLoader(
-        dataset, batch_size=None, shuffle=False, num_workers=num_workers,
+        dataset,
+        batch_size=None,
+        shuffle=False,
+        num_workers=num_workers,
     )
     number_of_batches = size // batch_size
     if distributed:

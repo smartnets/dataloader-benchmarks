@@ -32,7 +32,10 @@ AUGMENTATION_MAPS = {
         "single": augmentation_single_gpu,
         "multi": augmentation_multi_gpu,
     },
-    "coco": {"single": aug, "multi": aug,},
+    "coco": {
+        "single": aug,
+        "multi": aug,
+    },
 }
 
 

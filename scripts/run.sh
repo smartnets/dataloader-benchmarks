@@ -12,8 +12,8 @@ docker run \
      --privileged \
      --env-file .env \
      --shm-size 8G \
-     -v benchmarks-datasets:/home/worker/workspace/datasets \
-     -v benchmarks-plots:/home/worker/workspace/plots \
-     -v benchmarks-results:/home/worker/workspace/results \
+     -v benchmark-datasets:/home/worker/workspace/datasets \
+     -v benchmark-plots:/home/worker/workspace/plots \
+     -v benchmark-results:/home/worker/workspace/results \
      "$DOCKER_NAME" \
      "$@"

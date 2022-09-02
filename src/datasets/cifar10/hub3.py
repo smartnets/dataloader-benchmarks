@@ -14,6 +14,7 @@ from src.utils.persist import get_s3_creds
 # datasets created by hub, so Hub3Dataset will be
 # the same as HubDataset
 
+
 class Hub3Dataset(Dataset):
     def __init__(self):
         super().__init__("cifar10", "hub3")
@@ -34,20 +35,16 @@ class Hub3Dataset(Dataset):
         ]
         with ds:
             # Create the tensors with names of your choice.
-            ds.create_tensor("images", htype="image",
-                             sample_compression="jpeg")
-            ds.create_tensor("labels", htype="class_label",
-                             class_names=class_names)
+            ds.create_tensor("images", htype="image", sample_compression="jpeg")
+            ds.create_tensor("labels", htype="class_label", class_names=class_names)
 
             # Add arbitrary metadata - Optional
             ds.info.update(description="CIFAR 10")
             ds.images.info.update(camera_type="SLR")
         with ds:
             for i, (image, label) in enumerate(cifar):
-                print(f"Iteration {i:4d}", end="\r",
-                      flush=True, file=sys.stderr)
-                ds.append({"images": np.array(image),
-                          "labels": np.uint8(label)})
+                print(f"Iteration {i:4d}", end="\r", flush=True, file=sys.stderr)
+                ds.append({"images": np.array(image), "labels": np.uint8(label)})
 
         return ds
 
@@ -77,10 +74,12 @@ class Hub3Dataset(Dataset):
     def get_local(self, mode="train", transforms=None):
         path = self.get_local_path()
         path /= f"{mode}"
-        return  api.dataset(str(path))
+        return api.dataset(str(path))
 
     def get_remote(self, mode="train", transforms=None):
         r_path = self.get_remote_path()
         r_path += f"/{mode}"
         creds = get_s3_creds()
+        if creds["endpoint_url"] is None:
+            del creds["endpoint_url"]
         return api.dataset(str(r_path), **creds)
