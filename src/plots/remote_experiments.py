@@ -8,21 +8,18 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from distutils.util import strtobool
 from matplotlib.lines import Line2D
+from src.config import settings as st
+from src.utils.general import config_to_bool
 
 plt.style.use(["science", "no-latex", "ieee", "std-colors"])
 COLORS = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 
-p2 = Path("/Users/danski/workspace/dataloader-benchmarks/plots")
+
+PATH = (
+    Path(st.ROOT_PATH_FOR_DYNACONF) / "remote_experiments_results"  # needs to be set up
+)  # folder needs to be created
+p2 = Path(st.ROOT_PATH_FOR_DYNACONF) / "plots"
 p2.mkdir(parents=True, exist_ok=True)
-
-
-def config_to_bool(value):
-    if isinstance(value, bool):
-        return value
-    elif isinstance(value, str):
-        return strtobool(value)
-    else:
-        raise ValueError("Wrong parameter")
 
 
 # %%
@@ -64,7 +61,6 @@ def extract_metrics(exp):
 
 
 # %%
-PATH = Path("/Users/danski/workspace/dataloader-benchmarks/remote_experiments_results")
 experiments = []
 for file in PATH.rglob("*.json"):
     with open(file, "r") as fh:
@@ -72,6 +68,7 @@ for file in PATH.rglob("*.json"):
     proc = extract_metrics(data)
     experiments += [proc]
 df = pd.DataFrame(experiments)
+df["library"] = df["library"].replace({"hub3": "Deep Lake"})
 
 # %%
 fig, ax = plt.subplots()
@@ -94,13 +91,13 @@ x_range = np.arange(N)
 width = 0.2
 
 libs = sorted(df[hue].unique())
-lib_names = ["Hub", "Hub3", "Webdataset"]
+# lib_names = ["Hub", "Deep Lake", "Webdataset"]
 
 fig, ax = plt.subplots()
 for i, lib in enumerate(libs):
 
     vals = df[df[hue] == lib][target].values
-    r = ax.bar(x_range + width * (i - 1), vals, width=width, label=lib_names[i])
+    r = ax.bar(x_range + width * (i - 1), vals, width=width, label=libs[i])
 
     c = (vals - vals[0]) / vals[0]
     c_str = [f"{c:.0%}" if c > 0 else "" for c in c]
@@ -112,3 +109,5 @@ ax.set_xticks(x_range, list(df[x].unique()))
 ax.set_ylabel(target_label)
 ax.set_xlabel("Source")
 fig.savefig(p2 / "source_gains.jpg")
+
+# %%
