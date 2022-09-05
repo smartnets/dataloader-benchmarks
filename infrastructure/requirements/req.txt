@@ -39,3 +39,4 @@ viztracer
 webdataset
 yappi
 SciencePlots
+scipy

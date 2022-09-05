@@ -20,10 +20,6 @@ def set_general():
 
     st.REMOTE = False
 
-def set_configs(num):
-
-    
-
 
 # %%
 if __name__ == "__main__":
@@ -31,7 +27,6 @@ if __name__ == "__main__":
     set_general()
 
     for lib in LIBRARIES:
-
 
         print(f"Starting to prepare dataset of {lib}")
         ARGS = [
@@ -57,7 +52,7 @@ if __name__ == "__main__":
                 continue
 
             os.environ["DYNACONF_LIBRARY"] = lib
-            os.environ["IS_CUTOFF_RUN_MODEL"] = str(run_model)
+            os.environ["DYNACONF_IS_CUTOFF_RUN_MODEL"] = str(run_model)
 
             setup_s3cmd()
 
