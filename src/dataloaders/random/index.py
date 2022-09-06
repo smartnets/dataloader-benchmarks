@@ -4,7 +4,7 @@ from src.dataloaders.random.hub import HubLoader
 from src.dataloaders.random.squirrel import SquirrelLoader
 from src.dataloaders.random.webdataset import WebdatasetLoader
 from src.dataloaders.random.torchdata import TorchdataLoader
-from src.dataloaders.random.hub3 import Hub3Loader
+from src.dataloaders.random.deep_lake import DeepLakeLoader
 
 RandomLoaders = {
     "pytorch": PytorchLoader,
@@ -13,5 +13,5 @@ RandomLoaders = {
     "webdataset": WebdatasetLoader,
     "torchdata": TorchdataLoader,
     "squirrel": SquirrelLoader,
-    "hub3": Hub3Loader,
+    "deep_lake": DeepLakeLoader,
 }

@@ -2,7 +2,7 @@ from src.datasets.random.ffcv import FFCVDataset
 from src.datasets.random.pytorch import PytorchDataset
 from src.datasets.random.hub import HubDataset
 from src.datasets.random.squirrel import SquirrelDataset
-from src.datasets.random.hub3 import Hub3Dataset
+from src.datasets.random.deep_lake import DeepLakeDataset
 from src.datasets.random.torchdata import TorchdataDataset
 from src.datasets.random.webdataset import WebdatasetDataset
 
@@ -13,5 +13,5 @@ RandomDatasets = {
     "webdataset": WebdatasetDataset(),
     "torchdata": TorchdataDataset(),
     "squirrel": SquirrelDataset(),
-    "hub3": Hub3Dataset(),
+    "deep_lake": DeepLakeDataset(),
 }

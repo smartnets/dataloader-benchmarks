@@ -53,17 +53,17 @@ Inside the container run:
 
 # Implemented Libraries and Datasets
 
-|          |           | Pytorch | FFCV | Hub | Hub3 | Torchdata | Webdataset | Squirrel |
-| -------- | --------- | ------- | ---- | --- | ---- | --------- | ---------- | -------- |
-| CIFAR-10 | default   | ✅      | ✅   | ✅  | ✅   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ✅   | ✅  | ✅   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❓   | ✅  | ✅   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ✅      | ✅   | ❌  | ✅   | ✅        | ✅         |  ✅        |
-| RANDOM   | default   | ✅      | ✅   | ✅  | ✅   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ✅   | ✅  | ✅   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❓   | ✅  | ✅   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ✅      | ✅   | ❌  | ✅   | ✅        | ✅         |  ✅        |
-| CoCo     | default   | ✅      | ❌   | ✅  | ✅   | ✅        | ✅         |  ✅        |
-|          | remote    | ❌      | ❌   | ✅  | ✅   | ❌        | ✅         |  ❓        |
-|          | filtering | ✅      | ❌   | ✅  | ✅   | ✅        | ✅         |  ❓        |
-|          | multi-gpu | ✅      | ❌   | ❌  | ✅   | ✅        | ✅         |  ✅        |
+|          |           | Pytorch | FFCV | Hub | Deep Lake | Torchdata | Webdataset | Squirrel |
+| -------- | --------- | ------- | ---- | --- | --------- | --------- | ---------- | -------- |
+| CIFAR-10 | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         |  ✅      |
+|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         |  ❓      |
+|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         |  ❓      |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         |  ✅      |
+| RANDOM   | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         |  ✅      |
+|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         |  ❓      |
+|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         |  ❓      |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         |  ✅      |
+| CoCo     | default   | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         |  ✅      |
+|          | remote    | ❌      | ❌   | ✅  | ✅        | ❌        | ✅         |  ❓      |
+|          | filtering | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         |  ❓      |
+|          | multi-gpu | ✅      | ❌   | ❌  | ✅        | ✅        | ✅         |  ✅      |

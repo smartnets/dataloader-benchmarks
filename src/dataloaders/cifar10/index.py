@@ -1,5 +1,5 @@
 from src.dataloaders.cifar10.ffcv import FFCVLoader
-from src.dataloaders.cifar10.hub3 import Hub3Loader
+from src.dataloaders.cifar10.deep_lake import DeepLakeLoader
 from src.dataloaders.cifar10.pytorch import PytorchLoader
 from src.dataloaders.cifar10.hub import HubLoader
 from src.dataloaders.cifar10.squirrel import SquirrelLoader
@@ -13,5 +13,5 @@ CIFAR10Loaders = {
     "webdataset": WebdatasetLoader,
     "torchdata": TorchdataLoader,
     "squirrel": SquirrelLoader,
-    "hub3": Hub3Loader,
+    "deep_lake": DeepLakeLoader,
 }

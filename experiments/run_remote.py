@@ -6,7 +6,7 @@ from src.config import settings as st
 from pathlib import Path
 
 
-LIBRARIES = ["hub", "hub3", "webdataset"]
+LIBRARIES = ["hub", "deep_lake", "webdataset"]
 SERVERS = ["local", "remote_1", "remote_2"]
 
 

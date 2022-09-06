@@ -7,8 +7,8 @@ EXPERIMENTS = {
                 "ffcv",
                 "hub",
                 "hub-remote",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "pytorch",
                 "squirrel",
                 "torchdata",
@@ -18,8 +18,8 @@ EXPERIMENTS = {
             "multi-gpu": [
                 "ffcv",
                 "pytorch",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "squirrel",
                 "torchdata",
                 "webdataset",
@@ -28,8 +28,8 @@ EXPERIMENTS = {
             "filtering": [
                 "hub",
                 "hub-remote",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "pytorch",
                 "torchdata",
                 "webdataset",
@@ -49,8 +49,8 @@ EXPERIMENTS = {
                 "ffcv",
                 "hub",
                 "hub-remote",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "pytorch",
                 "squirrel",
                 "torchdata",
@@ -58,8 +58,8 @@ EXPERIMENTS = {
                 "webdataset-remote",
             ],
             "multi-gpu": [
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "ffcv",
                 "pytorch",
                 "squirrel",
@@ -70,8 +70,8 @@ EXPERIMENTS = {
             "filtering": [
                 "hub",
                 "hub-remote",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "pytorch",
                 "torchdata",
                 "webdataset",
@@ -90,8 +90,8 @@ EXPERIMENTS = {
             "single-gpu": [
                 "hub",  # works
                 "hub-remote",
-                "hub3",
-                "hub3-remote",
+                "deep_lake",
+                "deep_lake-remote",
                 "pytorch",  # works
                 "squirrel",  # works
                 "torchdata",  # works
@@ -99,8 +99,8 @@ EXPERIMENTS = {
                 "webdataset-remote",  # works
             ],
             "multi-gpu": [
-                "hub3",  # works
-                "hub3-remote",  # works
+                "deep_lake",  # works
+                "deep_lake-remote",  # works
                 "pytorch",  # works
                 "squirrel",  # works
                 "torchdata",  # works
@@ -114,8 +114,8 @@ EXPERIMENTS = {
                 "webdataset-remote",
                 "hub",  # works
                 "hub-remote",
-                "hub3",  # works
-                "hub3-remote",
+                "deep_lake",  # works
+                "deep_lake-remote",
             ],
         },
         "is_cutoff_run_model": [True],

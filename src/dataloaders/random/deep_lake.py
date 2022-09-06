@@ -1,23 +1,24 @@
-# from indra import api, Loader
-# from indra.pytorch.helper_fns import transform_fn
 from src.dataloaders.base import DataLoader
-from src.datasets.cifar10.index import CIFAR10Datasets
-from src.datasets.cifar10.base import (
+from src.datasets.random.index import RandomDatasets
+from src.datasets.random.base import (
     get_train_transforms,
     get_eval_transforms,
     LABELS_DICT,
 )
 from indra import Loader
-from src.libraries.hub3 import filter_by_class
+from src.libraries.deep_lake import filter_by_class
 
-DATASET = CIFAR10Datasets["hub3"]
+DATASET = RandomDatasets["deep_lake"]
 
 
-class Hub3Loader(DataLoader):
+class DeepLakeLoader(DataLoader):
     transform = None
 
     def _get(self, mode, transform, **kwargs):
+
+        # kwargs["num_workers"] = 0 # increased performance
         self.transform = transform
+
         if self.remote:
             dataset = DATASET.get_remote(mode=mode, transforms=None)
         else:

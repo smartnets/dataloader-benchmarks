@@ -68,7 +68,7 @@ for file in PATH.rglob("*.json"):
     proc = extract_metrics(data)
     experiments += [proc]
 df = pd.DataFrame(experiments)
-df["library"] = df["library"].replace({"hub3": "Deep Lake"})
+df["library"] = df["library"].replace({"deep_lake": "Deep Lake"})
 
 # %%
 fig, ax = plt.subplots()

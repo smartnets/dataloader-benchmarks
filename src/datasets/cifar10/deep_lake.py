@@ -10,14 +10,14 @@ from indra import api, Loader
 from src.utils.persist import get_s3_creds
 
 
-# Probably, hub3 loader will be able to work with
-# datasets created by hub, so Hub3Dataset will be
+# Probably, deep_lake loader will be able to work with
+# datasets created by hub, so DeepLakeDataset will be
 # the same as HubDataset
 
 
-class Hub3Dataset(Dataset):
+class DeepLakeDataset(Dataset):
     def __init__(self):
-        super().__init__("cifar10", "hub3")
+        super().__init__("cifar10", "deep_lake")
 
     def _create(self, cifar, ds):
 

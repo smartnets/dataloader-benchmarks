@@ -51,7 +51,7 @@ class CNNModel(Model):
         cutoff = kwargs.get("cutoff")
 
         for i, obj in metric_logger.log_round(dataloader, epoch, **kwargs):
-            # For Hub3 Dataloader
+            # For Deep Lake Dataloader
             if isinstance(obj, dict):
                 inputs, labels = obj["images"], obj["labels"]
             else:
@@ -98,7 +98,7 @@ class CNNModel(Model):
 
         with torch.no_grad():
             for obj in dataloader:
-                # For Hub3 Dataloader
+                # For Deep Lake Dataloader
                 if isinstance(obj, dict):
                     data, target = obj["images"], obj["labels"]
                 else:

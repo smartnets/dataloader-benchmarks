@@ -2,10 +2,10 @@ from src.dataloaders.base import DataLoader
 from src.datasets.coco.index import CocoDatasets
 from src.datasets.coco.base import LABEL_DICT, core_transform
 from indra import Loader
-from src.libraries.hub3 import filter_by_class
+from src.libraries.deep_lake import filter_by_class
 from functools import partial
 
-DATASET = CocoDatasets["hub3"]
+DATASET = CocoDatasets["deep_lake"]
 
 
 def identity(x, y):
@@ -24,7 +24,7 @@ def collate_fn(batch):
     return tuple(zip(*batch))
 
 
-class Hub3Loader(DataLoader):
+class DeepLakeLoader(DataLoader):
     transform = None
 
     def _get(self, mode, **kwargs):
