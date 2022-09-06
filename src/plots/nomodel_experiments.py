@@ -89,7 +89,7 @@ fig, ax = plt.subplots()
 sns.barplot(data=df, x="library", hue="run_model", y="avg_speed")
 
 ax.set_xlabel("Library")
-ax.set_ylabel("Total Running Time [s]")
+ax.set_ylabel("Average Speed [#/s]")
 ax.tick_params(axis="x", labelrotation=20)
 ax.set_yscale("log")
 ax.legend()
