@@ -39,6 +39,15 @@ def compute_average_speed(runtimes: list, batch_size: int):
     return np.sum(speed_list)
 
 
+def compute_average_speed_10(runtimes: list, batch_size: int):
+    """
+    runtimes: list of the batch times for each worker.
+    """
+
+    speed_list = [np.mean([batch_size / t for t in rt[1:10]]) for rt in runtimes]
+    return np.sum(speed_list)
+
+
 def extract_metrics(exp):
 
     proc = dict()
@@ -56,6 +65,7 @@ def extract_metrics(exp):
         runtimes += [exp["1"]["all_runtimes"]]
     proc["avg_speed"] = compute_average_speed(runtimes, proc["batch_size"])
 
+    proc["avg_speed_10"] = compute_average_speed_10(runtimes, proc["batch_size"])
     return proc
 
 
@@ -101,7 +111,7 @@ fig.savefig(p2 / "run_model_comparission_random.jpg")
 # %%
 df_ = df[df["run_model"] == "Loading & Fwd & Bkw"]
 fig, ax = plt.subplots()
-sns.regplot(data=df_, x="total_time", y="avg_speed", ax=ax)
+sns.regplot(data=df_, x="total_time", y="avg_speed_10", ax=ax)
 ax.set_xlabel("Total Training Time [s]")
 ax.set_ylabel("Average Speed [#/s]")
 
@@ -110,7 +120,7 @@ fig.savefig(p2 / "correlation_speed_time.jpg")
 # %%
 
 # %%
-x = df_["avg_speed"].values
+x = df_["avg_speed_10"].values
 y = df_["total_time"].values
 
 res = pearsonr(x, y)
