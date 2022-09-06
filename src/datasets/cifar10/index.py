@@ -1,5 +1,5 @@
 from src.datasets.cifar10.ffcv import FFCVDataset
-from src.datasets.cifar10.hub3 import Hub3Dataset
+from src.datasets.cifar10.deep_lake import DeepLakeDataset
 from src.datasets.cifar10.pytorch import PytorchDataset
 from src.datasets.cifar10.hub import HubDataset
 from src.datasets.cifar10.torchdata import TorchdataDataset
@@ -13,5 +13,5 @@ CIFAR10Datasets = {
     "webdataset": WebdatasetDataset(),
     "torchdata": TorchdataDataset(),
     "squirrel": SquirrelDataset(),
-    "hub3": Hub3Dataset(),
+    "deep_lake": DeepLakeDataset(),
 }

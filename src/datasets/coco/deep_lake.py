@@ -5,13 +5,13 @@ from src.datasets.base import Dataset
 from src.datasets.coco.base import get_coco, LABEL_DICT
 from indra import api
 from src.utils.persist import get_s3_creds
-from src.libraries.hub3 import create_dataset
+from src.libraries.deep_lake import create_dataset
 from src.config import settings as st
 
 
-class Hub3Dataset(Dataset):
+class DeepLakeDataset(Dataset):
     def __init__(self):
-        super().__init__("coco", "hub3")
+        super().__init__("coco", "deep_lake")
 
     def generate_locally(self, mode="train", transforms=None):
 

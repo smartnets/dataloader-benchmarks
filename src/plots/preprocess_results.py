@@ -98,7 +98,7 @@ for file in PATH.rglob("*.json"):
 df = pd.DataFrame(experiments)
 
 df = df[(df["cutoff"] == 10)].dropna(axis=1, how="all")
-df["library"] = df["library"].replace({"hub3": "Deep Lake"})
+df["library"] = df["library"].replace({"deep_lake": "Deep Lake"})
 
 
 pal = dict((l, c) for l, c in zip(df["library"].unique(), COLORS))

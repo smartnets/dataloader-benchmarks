@@ -1,4 +1,4 @@
-from src.datasets.coco.hub3 import Hub3Dataset
+from src.datasets.coco.deep_lake import DeepLakeDataset
 from src.datasets.coco.pytorch import PytorchDataset
 from src.datasets.coco.hub import HubDataset
 from src.datasets.coco.squirrel import SquirrelDataset
@@ -10,6 +10,6 @@ CocoDatasets = {
     "hub": HubDataset(),
     "webdataset": WebdatasetDataset(),
     "torchdata": TorchdataDataset(),
-    "hub3": Hub3Dataset(),
+    "deep_lake": DeepLakeDataset(),
     "squirrel": SquirrelDataset(),
 }
