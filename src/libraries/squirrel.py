@@ -77,10 +77,6 @@ def build_dataset(
         hooks.append(SplitByRank)
     ds = MessagepackDriver(path).get_iter(key_hooks=hooks)
 
-    if distributed:
-        ds = ds.compose(SplitByRank)
-
-    ds = ds.compose(SplitByWorker)
     ds = ds.map(transformation_map)
 
     if filtering:
