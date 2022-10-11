@@ -37,7 +37,7 @@ class DeepLakeLoader(DataLoader):
         return loader
 
     def get_train_loader(self, **kwargs):
-        t = get_train_transforms(to_pil=True)
+        t = get_train_transforms(to_pil=False)
         return self._get("train", t, **kwargs)
 
     def get_val_loader(self, **kwargs):

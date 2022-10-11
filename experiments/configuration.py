@@ -1,19 +1,19 @@
 EXPERIMENTS = {
     "random": {
-        "batch_size": [16, 64, 128],
-        "workers": [0, 1, 2],
+        "batch_size": [128],
+        "workers": [0],
         "libraries": {
             "single-gpu": [
                 "ffcv",
                 "hub",
-                "hub-remote",
+                # "hub-remote",
                 "deep_lake",
-                "deep_lake-remote",
+                # "deep_lake-remote",
                 "pytorch",
                 "squirrel",
                 "torchdata",
                 "webdataset",
-                "webdataset-remote",
+                # "webdataset-remote",
             ],
             "multi-gpu": [
                 "ffcv",
@@ -38,8 +38,9 @@ EXPERIMENTS = {
         },
         "is_cutoff_run_model": [True],
         "filtering_classes": ["0", "13"],
-        "cutoff": 10,
+        "cutoff": -1,
         "reps": 3,
+        "epochs" : 2,
     },
     "cifar10": {
         "batch_size": [32, 64, 128],
@@ -82,6 +83,7 @@ EXPERIMENTS = {
         "is_cutoff_run_model": [True],
         "cutoff": 10,
         "reps": 3,
+        "epochs" : 1,
     },
     "coco": {
         "batch_size": [1, 2, 4],  # [2, 8, 32, 64, 128], #, 32, 64, 128],
@@ -122,5 +124,6 @@ EXPERIMENTS = {
         "filtering_classes": ["pizza", "couch", "cat"],
         "cutoff": 10,
         "reps": 3,
+        "epochs" : 1,
     },
 }

@@ -78,8 +78,8 @@ def main(rank, world_size, run_id, port):
         metric_logger.update_final_dicts(outputs)
         metric_logger.persist_metrics()
 
-        if is_s3_up():
-            persist_results(metric_logger.path)
+        # if is_s3_up():
+        #     persist_results(metric_logger.path)
 
     if distributed:
         cleanup()

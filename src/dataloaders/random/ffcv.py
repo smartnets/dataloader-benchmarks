@@ -9,6 +9,7 @@ from ffcv.fields.decoders import IntDecoder, SimpleRGBImageDecoder
 import ffcv.loader
 from ffcv.pipeline.operation import Operation
 from ffcv.transforms import (
+    RandomHorizontalFlip,
     Cutout,
     Convert,
     ToDevice,
@@ -34,15 +35,18 @@ def get_transforms(mode, rank):
     image_pipeline: List[Operation] = [SimpleRGBImageDecoder()]
 
     # Add image transforms and normalization
+    # New transformations    
     image_pipeline.extend(
         [
+            RandomHorizontalFlip(),
             ToTensor(),
             ToDevice(f"cuda:{rank}", non_blocking=True),
             ToTorchImage(),
             Convert(torch.float16),
             torchvision.transforms.Normalize(CIFAR_MEAN, CIFAR_STD),
         ]
-    )
+     )
+
     return image_pipeline, label_pipeline
 
 

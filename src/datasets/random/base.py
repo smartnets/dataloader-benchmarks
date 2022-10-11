@@ -111,17 +111,23 @@ def get_random(mode="train", download=False, transform=None):
 
 def get_train_transforms(to_pil: bool = False):
 
-    transform_list = [
-        transforms.RandomHorizontalFlip(),
-        # transforms.ToTensor()
-        normalize(np.array(MEAN), np.array(STD)),
-        cutout(8, 1, False),
-        to_tensor(),
-        # Sleep()
-    ]
-    if to_pil:
-        transform_list.insert(0, transforms.ToPILImage())
+    # transform_list = [
+    #     transforms.RandomHorizontalFlip(),
+    #     # transforms.ToTensor()
+    #     normalize(np.array(MEAN), np.array(STD)),
+    #     cutout(8, 1, False),
+    #     to_tensor(),
+    #     # Sleep()
+    # ]
+    # if to_pil:
+    #     transform_list.insert(0, transforms.ToPILImage())
 
+    transform_list = [
+        transforms.ToTensor(),
+        transforms.RandomHorizontalFlip(),
+        transforms.Normalize(MEAN, STD),
+    ]
+    
     train_transform = transforms.Compose(transform_list)
     return train_transform
 
