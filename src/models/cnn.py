@@ -119,4 +119,4 @@ class CNNModel(Model):
 
         running_loss /= samples
         metric_logger.log_loss(running_loss, mode)
-        metric_logger.log_metric({"accuracy": m}, mode)
+        metric_logger.log_metric({"accuracy": m.item()}, mode)

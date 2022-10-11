@@ -66,6 +66,7 @@ if __name__ == "__main__":
     RM = experiment_dict["is_cutoff_run_model"]
     FC = experiment_dict["filtering_classes"]
     REPS = experiment_dict["reps"]
+    EPOCHS = 1
 
     for rep in range(REPS):
         for batch_size, num_workers, library, run_model in product(BS, NW, LB, RM):
@@ -85,6 +86,7 @@ if __name__ == "__main__":
                 FC,
                 rep,
                 args.filename,
+                EPOCHS,
             )
             ARGS = ["python", "-Wignore", "src/run.py"]
             try:
