@@ -20,7 +20,7 @@ DYNACONF_S3_ENDPOINT=http://172.28.142.23:10000 #
 
 1. Clone this repository
 2. Export the wheel password `export WHEEL_PASSWORD=<password>`
-3. Decrypt the wheel: `./infrastructure/decryt_secret.sh`
+3. Decrypt the wheel: `./infrastructure/decrypt_secret.sh`
 4. Build the docker container: `./scripts/build.sh`
 5. Start the minio (S3 like) container: `./scripts/start_minio.sh` (check that IP and PORT match the `S3_ENDPOINT`)
 6. Run the container: `./scripts/run.sh`
