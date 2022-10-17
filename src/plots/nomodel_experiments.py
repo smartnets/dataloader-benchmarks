@@ -79,7 +79,7 @@ for file in PATH.rglob("*.json"):
 df = pd.DataFrame(experiments)
 df["library"] = df["library"].replace(
     {
-        "hub3": "Deep Lake",
+        "deep_lake": "Deep Lake",
         "webdataset": "Webdataset",
         "ffcv": "FFCV",
         "torchdata": "Torchdata",

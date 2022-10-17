@@ -6,7 +6,7 @@ from src.config import settings as st
 from pathlib import Path
 
 
-LIBRARIES = ["ffcv", "squirrel", "torchdata", "pytorch", "hub", "hub3", "webdataset"]
+LIBRARIES = ["ffcv", "squirrel", "torchdata", "pytorch", "hub", "deep_lake", "webdataset"]
 
 
 def set_general():
