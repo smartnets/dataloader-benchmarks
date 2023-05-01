@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from src.datasets.base import Dataset
 from src.datasets.random.base import get_random, LABELS_DICT
-from indra import api
+import deeplake
 from src.utils.persist import get_s3_creds
 from src.libraries.deep_lake import create_dataset
 from src.config import settings as st
@@ -35,7 +35,7 @@ class DeepLakeDataset(Dataset):
     def get_local(self, mode="train", transforms=None):
         path = self.get_local_path()
         path /= f"{mode}"
-        return api.dataset(str(path))
+        return deeplake.dataset(str(path))
 
     def get_remote(self, mode="train", transforms=None):
         path = self.get_remote_path()
@@ -44,4 +44,4 @@ class DeepLakeDataset(Dataset):
 
         if creds["endpoint_url"] is None:
             del creds["endpoint_url"]
-        return api.dataset(str(path), **creds)
+        return deeplake.dataset(str(path), **creds)

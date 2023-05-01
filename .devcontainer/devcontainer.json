@@ -7,8 +7,8 @@
         "context": "..",
         // Fix for denied access to coco scripts
         "args": {
-            "UID": 1003,
-            "GID": 27,
+            "UID": 1002,
+            //"GID": 27,
         }
     },
     "runArgs":
@@ -21,8 +21,8 @@
         "--cap-add",
         "sys_ptrace",
         "--privileged",
-        "--env-file",
-        "devcontainer.env",
+        //"--env-file",
+        //"devcontainer.env",
         "--shm-size",
         "100G"
     ],

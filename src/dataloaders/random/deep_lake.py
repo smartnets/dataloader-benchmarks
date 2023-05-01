@@ -5,7 +5,6 @@ from src.datasets.random.base import (
     get_eval_transforms,
     LABELS_DICT,
 )
-from indra import Loader
 from src.libraries.deep_lake import filter_by_class
 
 DATASET = RandomDatasets["deep_lake"]
@@ -28,9 +27,8 @@ class DeepLakeLoader(DataLoader):
             FC = [LABELS_DICT[c] for c in self.filtering_classes]
             dataset = filter_by_class(dataset, FC)
 
-        loader = Loader(
-            dataset,
-            transform_fn=self.transform_hub,
+        loader = dataset.pytorch(
+            transform=self.transform_hub,
             distributed=self.distributed,
             **kwargs
         )

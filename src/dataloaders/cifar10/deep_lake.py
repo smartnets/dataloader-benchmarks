@@ -1,5 +1,3 @@
-# from indra import api, Loader
-# from indra.pytorch.helper_fns import transform_fn
 from src.dataloaders.base import DataLoader
 from src.datasets.cifar10.index import CIFAR10Datasets
 from src.datasets.cifar10.base import (
@@ -7,7 +5,6 @@ from src.datasets.cifar10.base import (
     get_eval_transforms,
     LABELS_DICT,
 )
-from indra import Loader
 from src.libraries.deep_lake import filter_by_class
 
 DATASET = CIFAR10Datasets["deep_lake"]
@@ -27,9 +24,9 @@ class DeepLakeLoader(DataLoader):
             FC = [LABELS_DICT[c] for c in self.filtering_classes]
             dataset = filter_by_class(dataset, FC)
 
-        loader = Loader(
-            dataset,
-            transform_fn=self.transform_hub,
+        loader = dataset.pytorch(
+            transform={
+                'images': self.transform, 'labels': None},
             distributed=self.distributed,
             **kwargs
         )

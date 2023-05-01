@@ -1,7 +1,6 @@
 FROM nvidia/cuda:11.2.1-base-ubuntu20.04
 ARG USER="worker"
 ARG UID="1002"
-ARG INDRA="indra-0.0.5-py3-none-any.whl"
 ENV DEBIAN_FRONTEND "noninteractive"
 
 ENV PATH "$PATH:/usr/local"
@@ -44,9 +43,6 @@ RUN git clone https://github.com/pdollar/coco/ \
     && python setup.py install \
     && cd ../.. \
     && rm -r coco
-
-COPY infrastructure/$INDRA  /tmp/$INDRA
-RUN python -m pip install /tmp/$INDRA
 
 WORKDIR /home/$USER/workspace
 USER $USER

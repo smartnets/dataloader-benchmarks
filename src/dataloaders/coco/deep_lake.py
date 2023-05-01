@@ -1,7 +1,6 @@
 from src.dataloaders.base import DataLoader
 from src.datasets.coco.index import CocoDatasets
 from src.datasets.coco.base import LABEL_DICT, core_transform
-from indra import Loader
 from src.libraries.deep_lake import filter_by_class
 from functools import partial
 
@@ -41,10 +40,8 @@ class DeepLakeLoader(DataLoader):
             FC = [LABEL_DICT[c] for c in self.filtering_classes]
             dataset = filter_by_class(dataset, FC)
 
-        loader = Loader(
-            dataset,
-            # transform_fn=self.transform_hub,
-            transform_fn=partial(aux, mode),
+        loader = dataset.pytorch(
+            transform=partial(aux, mode),
             distributed=self.distributed,
             collate_fn=collate_fn,
             **kwargs
