@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 NAME="results/results_all_experiments.txt"
 mkdir -p results
+mkdir -p results/plots
 
 function print_time {
     now=$(date)
@@ -9,7 +10,7 @@ function print_time {
 
 ## Uncomment based on your experiments
 
-print_time "prepare cifar" && ./experiments/prepare_cifar10.sh 
+# print_time "prepare cifar" && ./experiments/prepare_cifar10.sh 
 # print_time "prepare random" && ./experiments/prepare_random.sh
 # print_time "prepare coco" && ./experiments/prepare_coco.sh
 

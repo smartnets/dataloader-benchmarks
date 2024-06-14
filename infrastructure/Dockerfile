@@ -32,7 +32,10 @@ Run echo "a"
 COPY infrastructure/install.sh /tmp/install.sh
 RUN chmod +x /tmp/install.sh && /bin/bash /tmp/install.sh
 
-RUN python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# RUN python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+
+# Set the environment variable to allow deprecated sklearn package installation
+ENV SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
 
 COPY infrastructure/requirements/req.txt /tmp/req.txt
 RUN python -m pip install -r /tmp/req.txt

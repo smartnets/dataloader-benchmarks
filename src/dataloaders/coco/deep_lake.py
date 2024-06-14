@@ -42,7 +42,6 @@ class DeepLakeLoader(DataLoader):
 
         loader = dataset.pytorch(
             transform=partial(aux, mode),
-            distributed=self.distributed,
             collate_fn=collate_fn,
             **kwargs
         )

@@ -74,6 +74,10 @@ if __name__ == "__main__":
             if skip_experiment(batch_size, num_workers, library):
                 continue
 
+            if library in ["deep_lake", "deep_lake-remote"]:
+                print("DeepLake Enterprise is not currently supported")
+                continue
+
             configure_env(
                 args.dataset,
                 library,

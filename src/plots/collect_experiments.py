@@ -15,7 +15,7 @@ GROUPS = [
     "NAME",
     "CUTOFF",
     "FILTERING",
-    "total_run_time",
+    "max_runtime",
     "proc_samples",
 ]
 
@@ -23,7 +23,7 @@ EXTRA = ["NUM_WORKERS", "BATCH_SIZE"]
 
 
 def get_experiment_df():
-    params_path = Path(st.downloaded_results_dir)
+    params_path = Path(st.local_results_dir)
 
     json_list = []
     for path in params_path.rglob("*parameters.json"):
@@ -40,7 +40,8 @@ def get_experiment_df():
     # df["FILTERING"] = df["FILTERING"].astype(str)
 
     for col in ["REMOTE", "DISTRIBUTED", "IS_CUTOFF_RUN_MODEL", "FILTERING"]:
-        df[col] = df[col].astype(str).map(strtobool)
+        if col in df.columns:
+            df[col] = df[col].astype(str).map(strtobool)
 
     df["NAME"] = df.apply(
         lambda x: x["LIBRARY"] + "-s3" if x["REMOTE"] else x["LIBRARY"], axis=1
