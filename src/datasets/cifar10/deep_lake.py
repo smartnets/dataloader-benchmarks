@@ -60,7 +60,7 @@ class DeepLakeDataset(Dataset):
 
         cifar = get_cifar10(mode, download=True, transform=transforms)
 
-        ds = hub.empty(str(path), overwrite=True)
+        ds = deeplake.empty(str(path), overwrite=True)
 
         return self._create(cifar, ds)
 
@@ -71,7 +71,7 @@ class DeepLakeDataset(Dataset):
 
         cifar = get_cifar10(mode, download=True, transform=transforms)
 
-        ds = hub.empty(str(path), overwrite=True, creds=get_s3_creds())
+        ds = deeplake.empty(str(path), overwrite=True, creds=get_s3_creds())
 
         return self._create(cifar, ds)
 

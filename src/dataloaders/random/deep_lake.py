@@ -29,7 +29,7 @@ class DeepLakeLoader(DataLoader):
 
         loader = dataset.pytorch(
             transform=self.transform_hub,
-            distributed=self.distributed,
+            # distributed=self.distributed,
             **kwargs
         )
         return loader

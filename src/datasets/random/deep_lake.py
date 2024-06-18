@@ -19,7 +19,7 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         random = get_random(mode, download=True, transform=transforms)
-        ds = hub.empty(str(path), overwrite=True)
+        ds = deeplake.empty(str(path), overwrite=True)
         return create_dataset(random, ds, list(LABELS_DICT.keys()))
 
     def generate_remotely(self, mode="train", transforms=None):
@@ -28,7 +28,7 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         random = get_random(mode, download=True, transform=transforms)
-        ds = hub.empty(str(path), creds=get_s3_creds(), overwrite=True)
+        ds = deeplake.empty(str(path), creds=get_s3_creds(), overwrite=True)
 
         return create_dataset(random, ds, list(LABELS_DICT.keys()))
 

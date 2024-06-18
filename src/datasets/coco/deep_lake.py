@@ -19,7 +19,7 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         coco = get_coco(mode, None)
-        ds = hub.empty(str(path), overwrite=True)
+        ds = deeplake.empty(str(path), overwrite=True)
         return create_dataset(coco, ds, list(LABEL_DICT.keys()), "coco")
 
     def generate_remotely(self, mode="train", transforms=None):
@@ -28,7 +28,7 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         coco = get_coco(mode, None)
-        ds = hub.empty(str(path), creds=get_s3_creds(), overwrite=True)
+        ds = deeplake.empty(str(path), creds=get_s3_creds(), overwrite=True)
 
         return create_dataset(coco, ds, list(LABEL_DICT.keys()), "coco")
 
