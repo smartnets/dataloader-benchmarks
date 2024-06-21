@@ -21,8 +21,10 @@ import sys
 
 
 import warnings
+# import logging
 
 warnings.filterwarnings("ignore")
+# logging.getLogger('torch.distributed').setLevel(logging.WARNING)
 
 LOADER_SWITCHER = {
     "cifar10": CIFAR10Loaders,

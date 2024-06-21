@@ -60,7 +60,7 @@ def generate_plot(df, params):
         style = "--" if "s3" in hue_ else "-"
         color = cmap.colors[ii]
         t = df[df[p["hue"]] == hue_]
-        ax.plot(
+        ax.scatter(
             t[p["x_axis"]],
             t[p["target"]],
             label=t["NAME"].iloc[0],
@@ -155,7 +155,6 @@ def plot_filtering_gains(df, params):
     df_ = df[df["DATASET"] == dataset].copy()
     df_ = df_[df_["DISTRIBUTED"] == False]
     df_ = df_[df_["IS_CUTOFF_RUN_MODEL"] == False]
-    print(df_.head())
 
     g = (
         df_.groupby(cols)[target]
@@ -191,7 +190,7 @@ def plot_filtering_gains(df, params):
     return fig, ax
 
 
-for ds in ["cifar10", "random"]:
+for ds in ["cifar10", "random", "coco"]:
 
     correlation_plot(df, ds)
 
@@ -200,7 +199,7 @@ for ds in ["cifar10", "random"]:
     params = {
         "dataset": ds,
         "is_distributed": False,
-        "run_model": False,
+        "run_model": True,
         "target": target,
         "target_label": target_label,
         "x_axis": "NUM_WORKERS",
@@ -215,7 +214,7 @@ for ds in ["cifar10", "random"]:
     params = {
         "dataset": ds,
         "is_distributed": False,
-        "run_model": False,
+        "run_model": True,
         "target": target,
         "target_label": target_label,
         "x_axis": "BATCH_SIZE",

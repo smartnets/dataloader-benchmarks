@@ -7,7 +7,7 @@ import torchmetrics
 from torch.cuda.amp import autocast
 
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
-from torchmetrics import MAP
+from torchmetrics.detection import MeanAveragePrecision as MAP
 from src.config import settings as st
 from src.utils.general import config_to_bool
 

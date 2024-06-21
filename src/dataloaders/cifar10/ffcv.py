@@ -29,7 +29,7 @@ def get_transforms(mode, rank):
     label_pipeline: List[Operation] = [
         IntDecoder(),
         ToTensor(),
-        ToDevice(f"cuda:{rank}"),
+        ToDevice(torch.device(f"cuda:{rank}"), non_blocking=True),
         Squeeze(),
     ]
     image_pipeline: List[Operation] = [SimpleRGBImageDecoder()]
@@ -38,7 +38,7 @@ def get_transforms(mode, rank):
     image_pipeline.extend(
         [
             ToTensor(),
-            ToDevice(f"cuda:{rank}", non_blocking=True),
+            ToDevice(torch.device(f"cuda:{rank}"), non_blocking=True),
             ToTorchImage(),
             Convert(torch.float16),
             torchvision.transforms.Normalize(CIFAR_MEAN, CIFAR_STD),

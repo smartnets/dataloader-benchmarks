@@ -1,47 +1,31 @@
 albumentations
-black
 boto3>=1.26.121
-# botocore
-click==8.0.4
-cython
-deeplake==3.0.18
+cython # Needed for pycocotools
+deeplake==3.7.3
 dynaconf
-ffcv==0.0.3
-google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib==0.4.6
-gspread
-hub==2.7.5
-ipykernel
+ffcv
+hub
 matplotlib 
-numba
-numpy==1.22.0
-oauth2client
-opencv-python
-opencv-python-headless
 pandas
-protobuf==3.19
-py-spy
-ray
-requests
+protobuf
 requests
 s3cmd
 scapy[basic]
 seaborn
-squirrel-core[all]==0.16.0
-squirrel-datasets-core==0.1.8
---extra-index-url https://download.pytorch.org/whl/cu117
+squirrel-core[all]
+squirrel-datasets-core
+--extra-index-url https://download.pytorch.org/whl/cu121
 torch==2.0.1
 torchvision==0.15.2
 torchaudio==2.0.2
-torchdata>=0.6.0
+torchdata
 torchmetrics==1.0.0
 torch_tb_profiler
-tornado==6.1.0
 tqdm
-# urllib3>=1.26.11
-viztracer
-webdataset==0.2.20
-yappi
-SciencePlots
+webdataset
 scipy
+nvidia-dali-cuda120
+nvidia-nvjpeg-cu12
+nvidia-cufft-cu12
+nvidia-npp-cu12
+nvidia-pyindex

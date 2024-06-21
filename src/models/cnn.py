@@ -42,7 +42,7 @@ class CNNModel(Model):
         criterion = self.init_criterion
         device = self.device
 
-        metric = self.metric()
+        metric = self.metric(task="multiclass", num_classes=10) # hardcoded for CIFAR10
         metric = metric.to(device)
 
         running_loss = 0
@@ -54,6 +54,12 @@ class CNNModel(Model):
             # For Deep Lake Dataloader
             if isinstance(obj, dict):
                 inputs, labels = obj["images"], obj["labels"]
+            # For Nvidia Dali Dataloader
+            elif isinstance(obj, list) and len(obj) == 1:
+                obj = obj[0]
+                inputs, labels = obj['data'], obj['label']
+                # Needed for the loss function
+                labels = labels.long()
             else:
                 inputs, labels = obj
 
