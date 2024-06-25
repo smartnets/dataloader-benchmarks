@@ -18,8 +18,8 @@ function print_time {
 # print_time "random def" && python experiments/run_benchmarks.py --dataset random --filename $NAME
 print_time "coco def" && python experiments/run_benchmarks.py --dataset coco --filename $NAME
 
-# print_time "random filter" && python experiments/run_benchmarks.py --dataset random --filtering --filename $NAME
 # print_time "cifar10 filter" && python experiments/run_benchmarks.py --dataset cifar10 --filtering --filename $NAME
+# print_time "random filter" && python experiments/run_benchmarks.py --dataset random --filtering --filename $NAME
 # print_time "coco filter" && python experiments/run_benchmarks.py --dataset coco --filtering --filename $NAME
 
 # print_time "cifar10 multi" && python experiments/run_benchmarks.py --dataset cifar10 --multi-gpu  --filename $NAME

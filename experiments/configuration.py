@@ -4,33 +4,33 @@ EXPERIMENTS = {
         "workers": [1],
         "libraries": {
             "single-gpu": [
-                # "ffcv",
-                # "hub",
-                # "hub-remote",
+                "ffcv",
+                # # "hub",
+                # # "hub-remote",
                 # "deep_lake",
-                # "deep_lake-remote",
+                # # "deep_lake-remote",
                 # "pytorch",
                 # "squirrel",
                 # "torchdata",
                 # "webdataset",
-                # "webdataset-remote",
-                "nvidia_dali",
+                # # "webdataset-remote",
+                # "nvidia_dali",
             ],
             "multi-gpu": [
-                # "ffcv",
+                "ffcv",
                 # "pytorch",
                 # "deep_lake",
-                # "deep_lake-remote",
+                # # "deep_lake-remote",
                 # "squirrel",
                 # "torchdata",
                 # "webdataset",
-                # "webdataset-remote",
-                "nvidia_dali",
+                # # "webdataset-remote",
+                # "nvidia_dali",
             ],
             "filtering": [
-                # "hub",
+                "hub",
                 # "hub-remote",
-                "deep_lake",
+                # "deep_lake",
                 # "deep_lake-remote",
                 # "pytorch", # timeout
                 # "torchdata",
@@ -48,33 +48,33 @@ EXPERIMENTS = {
         "workers": [4],
         "libraries": {
             "single-gpu": [
-                "ffcv",
-                "hub",
+                # "ffcv",
+                # # "hub",
                 # # "hub-remote",
-                 "deep_lake",
+                #  "deep_lake",
                 # #  "deep_lake-remote",
                 "pytorch",
-                "squirrel",
-                "torchdata",
-                "webdataset",
-                # "webdataset-remote",
-                "nvidia_dali",
+                # "squirrel",
+                # "torchdata",
+                # "webdataset",
+                # # "webdataset-remote",
+                # "nvidia_dali",
             ],
             "multi-gpu": [
-                "deep_lake",
-                # "deep_lake-remote",
+                # "deep_lake",
+                # # "deep_lake-remote",
                 "pytorch",
-                "ffcv",
-                "squirrel",
-                "torchdata",
-                "webdataset",
-                # "webdataset-remote",
-                "nvidia_dali",
+                # "ffcv",
+                # "squirrel",
+                # "torchdata",
+                # "webdataset",
+                # # "webdataset-remote",
+                # "nvidia_dali",
             ],
             "filtering": [
                 # "hub",
             #     "hub-remote",
-                "deep_lake",
+                # "deep_lake",
             #     "deep_lake-remote",
                 # "pytorch",
                 # "torchdata",
@@ -94,22 +94,24 @@ EXPERIMENTS = {
             "single-gpu": [
                 # "hub",  # works
                 # "hub-remote",
-                "deep_lake",
+                # "deep_lake",
                 # "deep_lake-remote",
                 # "pytorch",  # works
                 # "squirrel",  # works
                 # "torchdata",  # works
                 # "webdataset",  # works
                 # "webdataset-remote",  # works
+                "nvidia_dali",
             ],
             "multi-gpu": [
-                "deep_lake",  # works
+                # "deep_lake",  # works
                 # "deep_lake-remote",  # works
                 # "pytorch",  # works
                 # "squirrel",  # works
                 # "torchdata",  # works
                 # "webdataset",  # works
                 # "webdataset-remote",  # works
+                # "nvidia_dali",
             ],
             "filtering": [
                 # "pytorch", # don't run, too slow

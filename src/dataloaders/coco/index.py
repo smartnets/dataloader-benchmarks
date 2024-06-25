@@ -4,6 +4,7 @@ from src.dataloaders.coco.deep_lake import DeepLakeLoader
 from src.dataloaders.coco.squirrel import SquirrelLoader
 from src.dataloaders.coco.webdataset import WebdatasetLoader
 from src.dataloaders.coco.torchdata import TorchdataLoader
+from src.dataloaders.coco.nvidia_dali import NvidiaDaliLoader
 
 CocoLoaders = {
     "pytorch": PytorchLoader,
@@ -12,4 +13,5 @@ CocoLoaders = {
     "webdataset": WebdatasetLoader,
     "torchdata": TorchdataLoader,
     "squirrel": SquirrelLoader,
+    "nvidia_dali": NvidiaDaliLoader,
 }

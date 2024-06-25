@@ -37,6 +37,7 @@ def get_transforms(mode, rank):
     # Add image transforms and normalization
     image_pipeline.extend(
         [
+            RandomHorizontalFlip(),
             ToTensor(),
             ToDevice(torch.device(f"cuda:{rank}"), non_blocking=True),
             ToTorchImage(),

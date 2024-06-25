@@ -72,8 +72,18 @@ class FasterRCNNModel(Model):
             metric_logger.accumulate_samples(epoch, len(data[0]))
 
             if not kwargs["automatic_gpu_transfer"]:
-                images = list(image.to(device) for image in data[0])
-                targets = [{k: v.to(device) for k, v in t.items()} for t in data[1]]
+                if not isinstance(data[0], dict):
+                    images = list(image.to(device) for image in data[0])
+                    targets = [{k: v.to(device) for k, v in t.items()} for t in data[1]]
+                else:
+                    # Nvidia DALI Dataloader
+                    images = list(image.to(device) for image in data[0]["images"])
+                    labels = data[0]["labels"].to(torch.long).to(device)
+                    boxes = data[0]["boxes"].to(device)
+                    # Constant dummy boxes
+                    new_boxes = torch.ones_like(boxes)
+                    new_boxes[..., 2:] = 10
+                    targets = [{"labels": l, "boxes": b.view(-1, 4)} for l, b in zip(labels, new_boxes)]
 
             if config_to_bool(st.is_cutoff_run_model):
                 loss_dict = model(images, targets)

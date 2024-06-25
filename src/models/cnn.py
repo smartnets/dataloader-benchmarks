@@ -56,8 +56,7 @@ class CNNModel(Model):
                 inputs, labels = obj["images"], obj["labels"]
             # For Nvidia Dali Dataloader
             elif isinstance(obj, list) and len(obj) == 1:
-                obj = obj[0]
-                inputs, labels = obj['data'], obj['label']
+                inputs, labels = obj[0]['data'], obj[0]['label']
                 # Needed for the loss function
                 labels = labels.long()
             else:
