@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from src.datasets.base import Dataset
 from src.datasets.coco.base import get_coco, LABEL_DICT
-from indra import api
+import deeplake
 from src.utils.persist import get_s3_creds
 from src.libraries.deep_lake import create_dataset
 from src.config import settings as st
@@ -19,7 +19,7 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         coco = get_coco(mode, None)
-        ds = hub.empty(str(path), overwrite=True)
+        ds = deeplake.empty(str(path), overwrite=True)
         return create_dataset(coco, ds, list(LABEL_DICT.keys()), "coco")
 
     def generate_remotely(self, mode="train", transforms=None):
@@ -28,14 +28,14 @@ class DeepLakeDataset(Dataset):
         if not path:
             return None
         coco = get_coco(mode, None)
-        ds = hub.empty(str(path), creds=get_s3_creds(), overwrite=True)
+        ds = deeplake.empty(str(path), creds=get_s3_creds(), overwrite=True)
 
         return create_dataset(coco, ds, list(LABEL_DICT.keys()), "coco")
 
     def get_local(self, mode="train", transforms=None):
         path = self.get_local_path()
         path /= f"{mode}"
-        return api.dataset(str(path))
+        return deeplake.dataset(str(path))
 
     def get_remote(self, mode="train", transforms=None):
         path = self.get_remote_path()
@@ -43,4 +43,4 @@ class DeepLakeDataset(Dataset):
         creds = get_s3_creds()
         if creds["endpoint_url"] is None:
             del creds["endpoint_url"]
-        return api.dataset(str(path), **creds)
+        return deeplake.dataset(str(path), **creds)

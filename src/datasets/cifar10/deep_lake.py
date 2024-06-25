@@ -5,7 +5,7 @@ import numpy as np
 from src.datasets.base import Dataset
 from src.config import settings as st
 from src.datasets.cifar10.base import get_cifar10
-from indra import api, Loader
+import deeplake
 
 from src.utils.persist import get_s3_creds
 
@@ -35,16 +35,20 @@ class DeepLakeDataset(Dataset):
         ]
         with ds:
             # Create the tensors with names of your choice.
-            ds.create_tensor("images", htype="image", sample_compression="jpeg")
-            ds.create_tensor("labels", htype="class_label", class_names=class_names)
+            ds.create_tensor("images", htype="image",
+                             sample_compression="jpeg")
+            ds.create_tensor("labels", htype="class_label",
+                             class_names=class_names)
 
             # Add arbitrary metadata - Optional
             ds.info.update(description="CIFAR 10")
             ds.images.info.update(camera_type="SLR")
         with ds:
             for i, (image, label) in enumerate(cifar):
-                print(f"Iteration {i:4d}", end="\r", flush=True, file=sys.stderr)
-                ds.append({"images": np.array(image), "labels": np.uint8(label)})
+                print(f"Iteration {i:4d}", end="\r",
+                      flush=True, file=sys.stderr)
+                ds.append({"images": np.array(image),
+                          "labels": np.uint8(label)})
 
         return ds
 
@@ -56,7 +60,7 @@ class DeepLakeDataset(Dataset):
 
         cifar = get_cifar10(mode, download=True, transform=transforms)
 
-        ds = hub.empty(str(path), overwrite=True)
+        ds = deeplake.empty(str(path), overwrite=True)
 
         return self._create(cifar, ds)
 
@@ -67,14 +71,14 @@ class DeepLakeDataset(Dataset):
 
         cifar = get_cifar10(mode, download=True, transform=transforms)
 
-        ds = hub.empty(str(path), overwrite=True, creds=get_s3_creds())
+        ds = deeplake.empty(str(path), overwrite=True, creds=get_s3_creds())
 
         return self._create(cifar, ds)
 
     def get_local(self, mode="train", transforms=None):
         path = self.get_local_path()
         path /= f"{mode}"
-        return api.dataset(str(path))
+        return deeplake.dataset(str(path))
 
     def get_remote(self, mode="train", transforms=None):
         r_path = self.get_remote_path()
@@ -82,4 +86,4 @@ class DeepLakeDataset(Dataset):
         creds = get_s3_creds()
         if creds["endpoint_url"] is None:
             del creds["endpoint_url"]
-        return api.dataset(str(r_path), **creds)
+        return deeplake.dataset(str(r_path), **creds)

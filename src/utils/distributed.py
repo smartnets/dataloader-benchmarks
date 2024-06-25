@@ -53,7 +53,8 @@ def get_worker_info():
 def setup(rank, world_size, port):
     os.environ["MASTER_ADDR"] = "localhost"
     os.environ["MASTER_PORT"] = str(port)
-    dist.init_process_group("nccl", rank=rank, world_size=world_size)
+    # changed from "nccl" to "gloo" due to issues with the former
+    dist.init_process_group("gloo", rank=rank, world_size=world_size)
     torch.cuda.set_device(rank)
 
 

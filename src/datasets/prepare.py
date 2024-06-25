@@ -23,7 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('--dataset', type=str, default="cifar10", metavar='dataset',
                         help='Dataset to work with. Options: cifar10|coco|random [default: cifar10]')
     parser.add_argument('--library', type=str, default="pytorch", metavar='library',
-                        help='Library to load the dataset. Options: pytorch|ffcv|hub|webdataset|torchdata|squirrel|deep_lake [default: pytorch]')
+                        help='Library to load the dataset. Options: pytorch|ffcv|hub|webdataset|torchdata|squirrel|deep_lake|nvidia_dali [default: pytorch]')
     parser.add_argument('--path', type=str, default=f"{default_data_dir}", metavar='path',
                         help=f'Path to store the data. Options: pytorch|ffcv [default: {default_data_dir}]')
     parser.add_argument('--remote', default=False, action="store_true",

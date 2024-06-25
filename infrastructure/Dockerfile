@@ -1,7 +1,6 @@
-FROM nvidia/cuda:11.2.1-base-ubuntu20.04
+FROM nvidia/cuda:12.0.0-base-ubuntu20.04
 ARG USER="worker"
 ARG UID="1002"
-ARG INDRA="indra-0.0.5-py3-none-any.whl"
 ENV DEBIAN_FRONTEND "noninteractive"
 
 ENV PATH "$PATH:/usr/local"
@@ -33,7 +32,10 @@ Run echo "a"
 COPY infrastructure/install.sh /tmp/install.sh
 RUN chmod +x /tmp/install.sh && /bin/bash /tmp/install.sh
 
-RUN python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# RUN python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+
+# Set the environment variable to allow deprecated sklearn package installation
+ENV SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
 
 COPY infrastructure/requirements/req.txt /tmp/req.txt
 RUN python -m pip install -r /tmp/req.txt
@@ -44,9 +46,6 @@ RUN git clone https://github.com/pdollar/coco/ \
     && python setup.py install \
     && cd ../.. \
     && rm -r coco
-
-COPY infrastructure/$INDRA  /tmp/$INDRA
-RUN python -m pip install /tmp/$INDRA
 
 WORKDIR /home/$USER/workspace
 USER $USER

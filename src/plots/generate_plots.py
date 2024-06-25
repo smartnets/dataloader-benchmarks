@@ -36,12 +36,12 @@ def correlation_plot(df, dataset):
     df_ = df_[df_["DATASET"] == dataset]
 
     fig, ax = plt.subplots()
-    df_.plot.scatter(x="total_run_time", y="proc_samples_per_sec", ax=ax)
+    df_.plot.scatter(x="max_runtime", y="proc_samples_per_sec", ax=ax)
     ax.set_xlabel("Total Running Time (desired)")
     ax.set_ylabel("Processed samples per second (observed)")
     ax.set_title("Correlation between metrics of interest")
 
-    fig.savefig(f"correlation_{dataset}.png")
+    fig.savefig(f"results/plots/correlation_{dataset}.png")
 
 
 # %%
@@ -60,7 +60,7 @@ def generate_plot(df, params):
         style = "--" if "s3" in hue_ else "-"
         color = cmap.colors[ii]
         t = df[df[p["hue"]] == hue_]
-        ax.plot(
+        ax.scatter(
             t[p["x_axis"]],
             t[p["target"]],
             label=t["NAME"].iloc[0],
@@ -88,7 +88,7 @@ def generate_plot(df, params):
     fig_name += ".png"
 
     fig.tight_layout()
-    fig.savefig(fig_name)
+    fig.savefig(f"results/plots/{fig_name}")
 
     return fig, ax
     # fig, ax = plt.subplot()
@@ -106,7 +106,7 @@ def plot_ddp_gains(df, params):
 
     df_ = df[df["DATASET"] == dataset].copy()
     df_ = df_[df_["FILTERING"] == 0]
-    df_ = df_[df_["IS_CUTOFF_RUN_MODEL"] == True]
+    df_ = df_[df_["IS_CUTOFF_RUN_MODEL"] == False]
 
     g = (
         df_.groupby(cols)[target]
@@ -137,7 +137,7 @@ def plot_ddp_gains(df, params):
     fig_name = f"ddp_gains_{dataset}.png"
 
     ax.set_title(title)
-    fig.savefig(fig_name)
+    fig.savefig(f"results/plots/{fig_name}")
 
     return fig, ax
 
@@ -154,7 +154,7 @@ def plot_filtering_gains(df, params):
 
     df_ = df[df["DATASET"] == dataset].copy()
     df_ = df_[df_["DISTRIBUTED"] == False]
-    df_ = df_[df_["IS_CUTOFF_RUN_MODEL"] == True]
+    df_ = df_[df_["IS_CUTOFF_RUN_MODEL"] == False]
 
     g = (
         df_.groupby(cols)[target]
@@ -185,12 +185,12 @@ def plot_filtering_gains(df, params):
     fig_name = f"filtering_gains_{dataset}.png"
 
     ax.set_title(title)
-    fig.savefig(fig_name)
+    fig.savefig(f"results/plots/{fig_name}")
 
     return fig, ax
 
 
-for ds in ["cifar10", "random"]:
+for ds in ["cifar10", "random", "coco"]:
 
     correlation_plot(df, ds)
 

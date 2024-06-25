@@ -57,7 +57,8 @@ class MetricLogger(object):
         self.timer_epochs["start"] = time.perf_counter()
 
     def end_side_collectors(self):
-        self.timer_epochs["end"] = time.perf_counter() - self.timer_epochs["start"]
+        self.timer_epochs["end"] = time.perf_counter() - \
+            self.timer_epochs["start"]
         if self.rank == 0:
             [p.terminate() for p in self.pids]
 
@@ -166,10 +167,12 @@ class MetricLogger(object):
         k = []
         for i in range(self.completed_epochs):
             if i == st.num_epochs - 1:
-                k.append(self.timer_epochs["end"] - self.timer_epochs[i]["begin"])
+                k.append(self.timer_epochs["end"] -
+                         self.timer_epochs[i]["begin"])
             else:
                 k.append(
-                    self.timer_epochs[i + 1]["begin"] - self.timer_epochs[i]["begin"]
+                    self.timer_epochs[i + 1]["begin"] -
+                    self.timer_epochs[i]["begin"]
                 )
 
         # Here is where we calculate the speed

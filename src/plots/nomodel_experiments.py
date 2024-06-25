@@ -86,6 +86,7 @@ df["library"] = df["library"].replace(
         "pytorch": "Pytorch",
         "squirrel": "Squirrel",
         "hub": "Hub",
+        "nvidia_dali": "Nvidia DALI",
     }
 )
 

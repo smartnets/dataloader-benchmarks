@@ -5,6 +5,7 @@ from src.dataloaders.cifar10.hub import HubLoader
 from src.dataloaders.cifar10.squirrel import SquirrelLoader
 from src.dataloaders.cifar10.webdataset import WebdatasetLoader
 from src.dataloaders.cifar10.torchdata import TorchdataLoader
+from src.dataloaders.cifar10.nvidia_dali import NvidiaDaliLoader
 
 CIFAR10Loaders = {
     "pytorch": PytorchLoader,
@@ -14,4 +15,5 @@ CIFAR10Loaders = {
     "torchdata": TorchdataLoader,
     "squirrel": SquirrelLoader,
     "deep_lake": DeepLakeLoader,
+    "nvidia_dali": NvidiaDaliLoader,
 }

@@ -115,7 +115,7 @@ def get_train_transforms(to_pil: bool = False):
         transforms.RandomHorizontalFlip(),
         # transforms.ToTensor()
         normalize(np.array(MEAN), np.array(STD)),
-        cutout(8, 1, False),
+        # cutout(8, 1, False),
         to_tensor(),
         # Sleep()
     ]
