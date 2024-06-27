@@ -86,4 +86,4 @@ class DeepLakeDataset(Dataset):
         creds = get_s3_creds()
         if creds["endpoint_url"] is None:
             del creds["endpoint_url"]
-        return deeplake.dataset(str(r_path), **creds)
+        return deeplake.dataset(str(r_path), creds=creds)

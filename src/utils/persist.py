@@ -23,8 +23,7 @@ def folder_exists_and_not_empty(bucket: str, path: str) -> bool:
         path = path + "/"
 
     resp = s3.list_objects_v2(Bucket=bucket, Prefix=path, Delimiter="/", MaxKeys=1)
-    return "CommonPrefixes" in resp
-
+    return len(resp.get("CommonPrefixes", [])) > 0 or len(resp.get("Contents", [])) > 0
 
 def is_s3_up():
 

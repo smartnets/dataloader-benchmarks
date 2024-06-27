@@ -44,4 +44,4 @@ class DeepLakeDataset(Dataset):
 
         if creds["endpoint_url"] is None:
             del creds["endpoint_url"]
-        return deeplake.dataset(str(path), **creds)
+        return deeplake.dataset(str(path), creds=creds)
