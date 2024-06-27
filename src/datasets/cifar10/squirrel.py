@@ -59,7 +59,6 @@ class SquirrelDataset(Dataset):
         if not path:
             return None
 
-        # Initialization of SquirrelStore with local path
         store = SquirrelStore(
             url=str(path), serializer=MessagepackSerializer())
         cifar = get_cifar10(mode, download=True, transform=transforms)
@@ -86,8 +85,8 @@ class SquirrelDataset(Dataset):
         )
 
     def get_remote(self, mode="train", transforms=None, filtering=False, filtering_classes=[], distributed=False, batch_size=None):
-        path = self.get_local_path()
-        path /= f"{mode}"
+        path = self.get_remote_path()
+        path += f"/{mode}"
 
         if filtering:
             FC = [LABELS_DICT[i] for i in filtering_classes]

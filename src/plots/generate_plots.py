@@ -52,7 +52,7 @@ def generate_plot(df, params):
     df = filter_dataset(df, p["dataset"], p["is_distributed"], p["run_model"])
     df = df.groupby(GROUPS + [p["x_axis"]])[p["target"]].max().reset_index()
 
-    cmap = cm.get_cmap("tab10")
+    cmap = mp.colormaps.get_cmap("tab20")
 
     fig, ax = plt.subplots()
     for ii, hue_ in enumerate(df[p["hue"]].unique()):
