@@ -62,7 +62,6 @@ EXPERIMENTS = {
                 # "webdataset-remote",
                 # "nvidia_dali",
                 "squirrel-remote",
-                # "pytorch-remote",
             ],
             "multi-gpu": [
                 # "deep_lake",

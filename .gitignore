@@ -22,7 +22,7 @@ old/
 devcontainer.env
 
 *pt.trace.json
-
+*aws/
 # C extensions
 *.so
 
