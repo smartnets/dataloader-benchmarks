@@ -14,7 +14,11 @@ from src.datasets.transformations.cutout import cutout
 from src.utils.distributed import get_worker_info
 
 
+SAMPLE_SIZE = 50000
+IMAGE_SIZE = 256
 DATA_DIR = Path(st.local_data_dir)
+# if different sample size and image size, uncomment this
+# DATA_DIR /= f"random_{SAMPLE_SIZE}_{IMAGE_SIZE}"
 DATA_DIR /= "random"
 DATA_DIR /= "shared"
 
@@ -28,7 +32,7 @@ def get_size(mode="train"):
     if mode == "test":
         return 500
     else:
-        N = 50000
+        N = SAMPLE_SIZE
         VAL_SIZE = int(N * st.val_size)
         if mode == "train":
             return N - VAL_SIZE
@@ -61,7 +65,7 @@ class RandomDataset(Dataset):
         for i in range(self._len()):
             if i % 100 == 0:
                 print(f"{i} / {self._len()}", end="\r", flush=True)
-            imarray = np.random.randint(low=0, high=256, size=(250, 250, 3), dtype=np.uint8)
+            imarray = np.random.randint(low=0, high=255, size=(IMAGE_SIZE, IMAGE_SIZE, 3), dtype=np.uint8)
             img = Image.fromarray(imarray, "RGB")
             path = self.root_dir / f"{i}.jpeg"
             img.save(path)

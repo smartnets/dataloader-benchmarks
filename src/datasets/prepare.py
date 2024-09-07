@@ -37,7 +37,6 @@ if __name__ == "__main__":
         print(f"Either {args.dataset} or {args.library} is not valid")
 
     path = Path(args.path) / args.dataset / args.library
-    print(path)
     remote_path = remote_data_dir / args.dataset / args.library
 
     modes = ["train", "val"]

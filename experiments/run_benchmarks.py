@@ -66,13 +66,10 @@ if __name__ == "__main__":
     RM = experiment_dict["is_cutoff_run_model"]
     FC = experiment_dict["filtering_classes"]
     REPS = experiment_dict["reps"]
-    EPOCHS = 1
+    EPOCHS = 3
 
     for rep in range(REPS):
         for batch_size, num_workers, library, run_model in product(BS, NW, LB, RM):
-
-            if skip_experiment(batch_size, num_workers, library):
-                continue
 
             configure_env(
                 args.dataset,
@@ -91,7 +88,7 @@ if __name__ == "__main__":
             ARGS = ["python", "-Wignore", "src/run.py"]
             try:
                 pid = subprocess.Popen(ARGS)
-                pid.wait(timeout=120)  # 60 seconds
+                pid.wait(timeout=200)  # seconds
             except Exception as e:
                 print(f"Timeout Expired: {batch_size}, {num_workers}, {library}, {rep}")
                 pid.kill()
