@@ -25,7 +25,7 @@ class WebdatasetDataset(Dataset):
             return None
         path.mkdir(parents=True)
 
-        sink = wds.ShardWriter(str(path / self.shard_prefix), maxcount=500)
+        sink = wds.ShardWriter(str(path / self.shard_prefix), maxcount=1000)
         random = get_random(mode, download=True, transform=transforms)
 
         for index, (input, output) in enumerate(random):

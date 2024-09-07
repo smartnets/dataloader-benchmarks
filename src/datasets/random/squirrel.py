@@ -13,8 +13,8 @@ class SquirrelDataset(Dataset):
         super().__init__("random", "squirrel")
 
         self.num_shards = {  # These are manually hardcoded after looking at how many shards are created
-            "train": 50,
-            "test": 10,
+            "train": 100,
+            "test": 1,
             "val": 10,
         }
 

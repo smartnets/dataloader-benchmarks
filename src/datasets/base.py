@@ -2,6 +2,7 @@ from abc import ABC
 from pathlib import Path
 from src.config import settings as st
 from src.utils.persist import folder_exists_and_not_empty
+from src.datasets.random.base import SAMPLE_SIZE, IMAGE_SIZE
 
 
 class Dataset(ABC):
@@ -10,6 +11,9 @@ class Dataset(ABC):
         self.library = library
 
     def get_local_path(self):
+        # For variable sample sizes and image sizes for random dataset
+        if self.dataset == "random" and (SAMPLE_SIZE != 50000 or IMAGE_SIZE != 256):
+            return Path(st.local_data_dir) / f"{self.dataset}_{SAMPLE_SIZE}_{IMAGE_SIZE}" / self.library
         return Path(st.local_data_dir) / self.dataset / self.library
 
     def get_remote_path(self):
