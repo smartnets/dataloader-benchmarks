@@ -6,6 +6,7 @@ from pathlib import Path
 from src.datasets.transformations.identity import Identity
 from src.utils.distributed import get_worker_info
 from functools import partial
+from src.config import settings as st
 
 
 def filter_by_class(active_labels, sample):
@@ -81,6 +82,7 @@ def build_loader(
     )
     number_of_batches = size // batch_size
     if distributed:
-        loader = loader.repeat(2).slice(number_of_batches)
+        # Known DDP bug at https://github.com/webdataset/webdataset/issues/194
+        loader = loader.repeat(2).with_epoch(number_of_batches // st.world_size)
         loader.length = number_of_batches
     return loader

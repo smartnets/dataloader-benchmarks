@@ -1,6 +1,8 @@
+from torch.utils.data import SubsetRandomSampler
+
 def filter_by_class(active_classes, dataset):
-    sampler = [i for i, j in enumerate(dataset) if j[1] in active_classes]
-    return sampler
+    filtered_indices = [i for i, j in enumerate(dataset) if j[1] in active_classes]
+    return SubsetRandomSampler(filtered_indices)
 
 
 def filter_by_multi_class(active_classes, dataset):

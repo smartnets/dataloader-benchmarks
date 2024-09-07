@@ -24,8 +24,8 @@ class DeepLakeLoader(DataLoader):
             dataset = DATASET.get_local(mode=mode, transforms=None)
 
         if self.filtering:
-            FC = [LABELS_DICT[c] for c in self.filtering_classes]
-            dataset = filter_by_class(dataset, FC)
+            filter_conditions = " or ".join([f"labels == '{LABELS_DICT[c]}'" for c in self.filtering_classes])
+            dataset = dataset.filter(filter_conditions)
 
         loader = dataset.pytorch(
             transform=self.transform_hub,
