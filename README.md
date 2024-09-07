@@ -1,6 +1,6 @@
-# ml-benchmarks
+# dataloader-benchmarks
 
-This is a project for benchmarking data-loaders, with an emphasis on over-the-network data loading.
+This is a benchmarking suite for data loading libraries.
 
 # Set up
 
@@ -13,17 +13,13 @@ DOCKER_NAME=<name of org>/<name of container>:<version>
 DYNACONF_AWS_ACCESS_KEY_ID=<aws id>
 DYNACONF_AWS_SECRET_ACCESS_KEY=<aws secret>
 DYNACONF_BUCKET_NAME=<bucket name in aws> # needs to exist before running experiments
-DYNACONF_S3_ENDPOINT=http://172.28.142.23:10000 # 
 ```
 
 ## Running locally
 
 1. Clone this repository
-2. Export the wheel password `export WHEEL_PASSWORD=<password>`
-3. Decrypt the wheel: `./infrastructure/decrypt_secret.sh`
 4. Build the docker container: `./scripts/build.sh`
-5. Start the minio (S3 like) container: `./scripts/start_minio.sh` (check that IP and PORT match the `S3_ENDPOINT`)
-6. Run the container: `./scripts/run.sh`
+5. Run the container: `./scripts/run.sh`
 7. Run all the experiments: `./experiments/run_all.sh`
 
 ## Running on AWS
@@ -53,17 +49,18 @@ Inside the container run:
 
 # Implemented Libraries and Datasets
 
-|          |           | Pytorch | FFCV | Hub | Deep Lake | Torchdata | Webdataset | Squirrel |
-| -------- | --------- | ------- | ---- | --- | --------- | --------- | ---------- | -------- |
-| CIFAR-10 | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         |  ✅      |
-|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         |  ❓      |
-|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         |  ❓      |
-|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         |  ✅      |
-| RANDOM   | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         |  ✅      |
-|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         |  ❓      |
-|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         |  ❓      |
-|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         |  ✅      |
-| CoCo     | default   | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         |  ✅      |
-|          | remote    | ❌      | ❌   | ✅  | ✅        | ❌        | ✅         |  ❓      |
-|          | filtering | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         |  ❓      |
-|          | multi-gpu | ✅      | ❌   | ❌  | ✅        | ✅        | ✅         |  ✅      |
+|          |           | Pytorch | FFCV | Hub | Deep Lake | Torchdata | Webdataset | Squirrel | NVIDIA DALI   |
+| -------- | --------- | ------- | ---- | --- | --------- | --------- | ---------- | -------- | ------ |
+| CIFAR-10 | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         | ✅       | ✅     |
+|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         | ❓       | ❌     |
+|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         | ❓       | ❌     |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         | ✅       | ✅     |
+| RANDOM   | default   | ✅      | ✅   | ✅  | ✅        | ✅        | ✅         | ✅       | ✅     |
+|          | remote    | ❌      | ✅   | ✅  | ✅        | ❌        | ✅         | ❓       | ❌     |
+|          | filtering | ✅      | ❓   | ✅  | ✅        | ✅        | ✅         | ❓       | ❌     |
+|          | multi-gpu | ✅      | ✅   | ❌  | ✅        | ✅        | ✅         | ✅       | ✅     |
+| CoCo     | default   | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         | ✅       | ✅     |
+|          | remote    | ❌      | ❌   | ✅  | ✅        | ❌        | ✅         | ❓       | ❌     |
+|          | filtering | ✅      | ❌   | ✅  | ✅        | ✅        | ✅         | ❓       | ❌     |
+|          | multi-gpu | ✅      | ❌   | ❌  | ✅        | ✅        | ✅         | ✅       | ✅     |
+
