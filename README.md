@@ -2,6 +2,23 @@
 
 This is a benchmarking suite for data loading libraries.
 
+# Citation
+
+This repository contains the code and experiments accompanying the paper:
+
+```
+@inproceedings{ofeidis2024overview,
+  title={An overview of the data-loader landscape: Comparative performance analysis},
+  author={Ofeidis, Iason and Kiedanski, Diego and Tassiulas, Leandros},
+  booktitle={2024 IEEE International Conference on Big Data (BigData)},
+  pages={360--367},
+  year={2024},
+  organization={IEEE}
+}
+```
+
+If you use this repository in your research or find it helpful, please cite our work. 
+
 # Set up
 
 ## Environmental variables
